@@ -22,6 +22,7 @@ public class FederatedUserInfo extends DefaultUserInfo {
   private String unspecifiedNameId;
   private String authenticatingAuthority;
   private String schacHomeOrganizationType;
+  private String eduPersonUniqueId;
   private String eduPersonPrincipalName;
   private String eduPersonTargetedId;
 
@@ -72,6 +73,16 @@ public class FederatedUserInfo extends DefaultUserInfo {
     this.schacHomeOrganizationType = schacHomeOrganizationType;
   }
 
+  @Basic
+  @Column(name = "edu_person_unique_id")
+  public String getEduPersonUniqueId() {
+    return eduPersonUniqueId;
+  }
+
+  public void setEduPersonUniqueId(String eduPersonUniqueId) {
+    this.eduPersonUniqueId = eduPersonUniqueId;
+  }
+  
   @Basic
   @Column(name = "edu_person_principal_name")
   public String getEduPersonPrincipalName() {
@@ -183,6 +194,7 @@ public class FederatedUserInfo extends DefaultUserInfo {
     JsonObject obj = super.toJson();
     addProperty(obj, this.schacHomeOrganization, "schac_home_organization");
     addProperty(obj, this.schacHomeOrganizationType, "schac_home_organization_type");
+    addProperty(obj, this.eduPersonUniqueId, "edu_person_unique_id");
     addProperty(obj, this.eduPersonPrincipalName, "edu_person_principal_name");
     addProperty(obj, this.eduPersonTargetedId, "edu_person_targeted_id");
 
@@ -218,6 +230,7 @@ public class FederatedUserInfo extends DefaultUserInfo {
         ", unspecifiedNameId='" + unspecifiedNameId + '\'' +
         ", authenticatingAuthority='" + authenticatingAuthority + '\'' +
         ", schacHomeOrganizationType='" + schacHomeOrganizationType + '\'' +
+        ", eduPersonUniqueId='" + eduPersonUniqueId + '\'' +
         ", eduPersonPrincipalName='" + eduPersonPrincipalName + '\'' +
         ", eduPersonTargetedId='" + eduPersonTargetedId + '\'' +
         ", eduPersonAffiliations=" + eduPersonAffiliations +

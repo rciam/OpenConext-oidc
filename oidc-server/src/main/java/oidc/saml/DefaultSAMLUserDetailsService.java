@@ -153,6 +153,7 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
     userInfo.setIsMemberOfs(set(properties.get("urn:mace:dir:attribute-def:isMemberOf")));
     userInfo.setEduPersonEntitlements(set(properties.get("urn:mace:dir:attribute-def:eduPersonEntitlement")));
     userInfo.setSchacPersonalUniqueCodes(set(properties.get("urn:schac:attribute-def:schacPersonalUniqueCode")));
+    userInfo.setEduPersonUniqueId(flatten(properties.get("urn:mace:dir:attribute-def:eduPersonUniqueId")));
     userInfo.setEduPersonPrincipalName(flatten(properties.get("urn:mace:dir:attribute-def:eduPersonPrincipalName")));
     userInfo.setUids(set(properties.get("urn:mace:dir:attribute-def:uid")));
     userInfo.setEduPersonTargetedId(flatten(properties.get("urn:mace:dir:attribute-def:eduPersonTargetedID")));
