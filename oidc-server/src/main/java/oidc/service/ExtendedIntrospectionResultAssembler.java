@@ -24,7 +24,8 @@ public class ExtendedIntrospectionResultAssembler extends DefaultIntrospectionRe
       result.put("schac_home", federatedUserInfo.getSchacHomeOrganization());
       result.put("unspecified_id", federatedUserInfo.getUnspecifiedNameId());
       result.put("authenticating_authority", federatedUserInfo.getAuthenticatingAuthority());
-      result.put("edu_person_principal_name", federatedUserInfo.getEduPersonPrincipalName());
+      result.put("edu_person_unique_id", federatedUserInfo.getEduPersonUniqueId());
+      result.put("edu_person_principal_name", federatedUserInfo.getEduPersonPrincipalName()); // TODO Remove?      
     }
     return result;
   }

@@ -52,9 +52,10 @@ public class FederationScopeClaimTranslationService implements ScopeClaimTransla
     claims.add( "edu_person_entitlements");
 
     claims.add("schac_personal_unique_codes");
-    claims.add("edu_person_principal_name");
+    claims.add("edu_person_unique_id"); // TODO Map to sub claim?
+    claims.add("edu_person_principal_name"); // TODO Remove?
     claims.add("uids");
-    claims.add("edu_person_targeted_id");
+    claims.add("edu_person_targeted_id"); // TODO Remove?
 
   }
 

@@ -183,6 +183,7 @@ public class AbstractTestIntegration {
 
     assertEquals("surfnet.nl", userInfo.get("schac_home_organization"));
     assertEquals("institution", userInfo.get("schac_home_organization_type"));
+    assertEquals("0123456789@example.org", userInfo.get("edu_person_unique_id"));
     assertEquals("principal_name", userInfo.get("edu_person_principal_name"));
     assertEquals("fd9021b35ce0e2bb4fc28d1781e6cbb9eb720fed", userInfo.get("edu_person_targeted_id"));
     assertEquals(asList("student", "faculty"), userInfo.get("edu_person_affiliations"));

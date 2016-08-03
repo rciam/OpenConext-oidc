@@ -9,6 +9,7 @@ ALTER TABLE user_info ADD DTYPE varchar(256) DEFAULT NULL;
 ALTER TABLE user_info ADD unspecified_name_id varchar(256) DEFAULT NULL;
 ALTER TABLE user_info ADD schac_home_organization varchar(256) DEFAULT NULL;
 ALTER TABLE user_info ADD schac_home_organization_type varchar(256) DEFAULT NULL;
+ALTER TABLE user_info ADD edu_person_unique_id varchar(322) DEFAULT NULL;
 ALTER TABLE user_info ADD edu_person_principal_name varchar(256) DEFAULT NULL;
 ALTER TABLE user_info ADD edu_person_targeted_id varchar(256) DEFAULT NULL;
 

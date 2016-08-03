@@ -10,6 +10,7 @@
     "authenticatingAuthority": "http://mock-idp",
     "schacHomeOrganization": "surfnet.nl",
     "schacHomeOrganizationType": "institution",
+    "eduPersonUniqueId": "0123456789@example.org",
     "eduPersonPrincipalName": "principal_name",
     "eduPersonTargetedId": "fd9021b35ce0e2bb4fc28d1781e6cbb9eb720fed",
     "eduPersonAffiliations": [
