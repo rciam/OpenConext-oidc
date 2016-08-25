@@ -2,10 +2,8 @@ package oidc.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import org.apache.commons.ssl.asn1.ASN1Object;
 import org.mitre.openid.connect.model.DefaultUserInfo;
 import org.springframework.util.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +15,8 @@ import java.util.Set;
 @Entity
 @Table(name = "user_info")
 public class FederatedUserInfo extends DefaultUserInfo {
+	
+  private static final long serialVersionUID = 7368566484262998945L;
 
   private String schacHomeOrganization;
   private String unspecifiedNameId;
