@@ -118,10 +118,6 @@
                             NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
                 <saml:AttributeValue xsi:type="xs:string">personal</saml:AttributeValue>
             </saml:Attribute>
-            <saml:Attribute Name="urn:mace:dir:attribute-def:eduPersonUniqueId"
-                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
-                <saml:AttributeValue xsi:type="xs:string">0123456789@example.org</saml:AttributeValue>
-            </saml:Attribute>
             <saml:Attribute Name="urn:mace:dir:attribute-def:eduPersonPrincipalName"
                             NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
                 <saml:AttributeValue xsi:type="xs:string">principal_name</saml:AttributeValue>
