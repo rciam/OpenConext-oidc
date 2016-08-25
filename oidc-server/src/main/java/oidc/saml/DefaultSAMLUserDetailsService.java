@@ -25,6 +25,8 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
 
   public static final String PERSISTENT_NAME_ID_FORMAT = "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent";
   public static final String EDU_PERSON_TARGETED_ID = "urn:mace:dir:attribute-def:eduPersonTargetedID";
+  public static final String EDU_PERSON_UNIQUE_ID_URN = "urn:mace:dir:attribute-def:eduPersonUniqueId";
+  public static final String EDU_PERSON_UNIQUE_ID_OID = "urn:oid:1.3.6.1.4.1.5923.1.1.1.13";
 
   private static final Logger LOG = LoggerFactory.getLogger(DefaultSAMLUserDetailsService.class);
 
@@ -50,14 +52,19 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
 
     //we saved the clientId on the relay state in ProxySAMLEntryPoint#getProfileOptions
     String clientId = credential.getRelayState();
+    final List<String> epuIds = properties.getOrDefault(EDU_PERSON_UNIQUE_ID_OID, 
+    		properties.getOrDefault(EDU_PERSON_UNIQUE_ID_URN, new ArrayList<String>()));
     List<String> persistentIds = properties.get(EDU_PERSON_TARGETED_ID);
     String sub;
-    if (CollectionUtils.isEmpty(persistentIds)) {
-      sub = hashedPairwiseIdentifierService.getIdentifier(unspecifiedNameId, clientId);
-      LOG.info("Using the hashedPairwiseIdentifierService for the {} sub for {} and {}", sub, unspecifiedNameId, clientId);
-    } else {
-      sub = persistentIds.get(0);
-      LOG.info("Using the persistent identifier for the {} sub for {} and {}", sub, unspecifiedNameId, clientId);
+    if (!CollectionUtils.isEmpty(epuIds)) {
+    	sub = epuIds.get(0);
+        LOG.info("Using the eduPersonUniqueId for the {} sub for {} and {}", sub, unspecifiedNameId, clientId);
+    } else if (!CollectionUtils.isEmpty(persistentIds)) {
+    	sub = persistentIds.get(0);
+        LOG.info("Using the persistent identifier for the {} sub for {} and {}", sub, unspecifiedNameId, clientId);
+    } else {      
+    	sub = hashedPairwiseIdentifierService.getIdentifier(unspecifiedNameId, clientId);
+    	LOG.info("Using the hashedPairwiseIdentifierService for the {} sub for {} and {}", sub, unspecifiedNameId, clientId);
     }
     String authenticatingAuthority = getAuthenticatingAuthority(credential);
 
