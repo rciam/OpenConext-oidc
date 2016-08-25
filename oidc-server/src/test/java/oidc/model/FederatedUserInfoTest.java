@@ -49,28 +49,18 @@ public class FederatedUserInfoTest {
     assertEquals("John Doe", jsonObject.getAsJsonPrimitive("preferred_username").getAsString());
     assertEquals("John", jsonObject.getAsJsonPrimitive("given_name").getAsString());
     assertEquals("Doe", jsonObject.getAsJsonPrimitive("family_name").getAsString());
-    assertEquals("NL", jsonObject.getAsJsonPrimitive("locale").getAsString());
     assertEquals("john.doe@example.org", jsonObject.getAsJsonPrimitive("email").getAsString());
-    assertEquals("surfnet.nl", jsonObject.getAsJsonPrimitive("schac_home_organization").getAsString());
-    assertEquals("institution", jsonObject.getAsJsonPrimitive("schac_home_organization_type").getAsString());
     assertEquals("0123456789@example.org", jsonObject.getAsJsonPrimitive("edu_person_unique_id").getAsString());
-    assertEquals("principal_name", jsonObject.getAsJsonPrimitive("edu_person_principal_name").getAsString());
+    assertEquals("jdoe@example.org", jsonObject.getAsJsonPrimitive("edu_person_principal_name").getAsString());
     assertEquals("fd9021b35ce0e2bb4fc28d1781e6cbb9eb720fed", jsonObject.getAsJsonPrimitive("edu_person_targeted_id").getAsString());
-    assertCommaSeparatedStringEquality(
-        new String[]{"student", "faculty"},
-        jsonObject.getAsJsonArray("edu_person_affiliations")
-    );
     assertCommaSeparatedStringEquality(
         new String[]{"student", "faculty"},
         jsonObject.getAsJsonArray("edu_person_scoped_affiliations")
     );
-    assertEquals("surfnet", jsonObject.getAsJsonArray("edumember_is_member_of").getAsString());
     assertCommaSeparatedStringEquality(
         new String[]{"http://xstor.com/contracts/HEd123", "urn:mace:washington.edu:confocalMicroscope"},
         jsonObject.getAsJsonArray("eduperson_entitlement")
     );
-    assertEquals("personal", jsonObject.getAsJsonArray("schac_personal_unique_codes").getAsString());
-    assertCommaSeparatedStringEquality(new String[]{"uid2", "uid1"}, jsonObject.getAsJsonArray("uids"));
   }
 
   //The ordering is not constant
