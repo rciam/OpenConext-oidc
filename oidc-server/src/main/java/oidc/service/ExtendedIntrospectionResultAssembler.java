@@ -19,11 +19,8 @@ public class ExtendedIntrospectionResultAssembler extends DefaultIntrospectionRe
     Map<String, Object> result = super.assembleFrom(accessToken, userInfo, authScopes);
     if (userInfo != null && userInfo instanceof FederatedUserInfo) {
       FederatedUserInfo federatedUserInfo = (FederatedUserInfo) userInfo;
-      result.put("schac_home", federatedUserInfo.getSchacHomeOrganization());
-      result.put("unspecified_id", federatedUserInfo.getUnspecifiedNameId());
       result.put("authenticating_authority", federatedUserInfo.getAuthenticatingAuthority());
-      result.put("edu_person_unique_id", federatedUserInfo.getEduPersonUniqueId());
-      result.put("edu_person_principal_name", federatedUserInfo.getEduPersonPrincipalName()); // TODO Remove?      
+      result.put("edu_person_entitlements", federatedUserInfo.getEduPersonEntitlements());
     }
     return result;
   }
