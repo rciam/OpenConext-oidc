@@ -1,9 +1,6 @@
 package oidc.service;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.SetMultimap;
 import org.mitre.openid.connect.service.ScopeClaimTranslationService;
-import org.mitre.openid.connect.service.impl.DefaultScopeClaimTranslationService;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 

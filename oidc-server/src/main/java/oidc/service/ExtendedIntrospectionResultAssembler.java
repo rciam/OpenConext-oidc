@@ -5,10 +5,8 @@ import org.mitre.oauth2.model.OAuth2AccessTokenEntity;
 import org.mitre.oauth2.service.impl.DefaultIntrospectionResultAssembler;
 import org.mitre.openid.connect.model.UserInfo;
 import org.springframework.context.annotation.Primary;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
 
