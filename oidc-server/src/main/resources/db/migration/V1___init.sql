@@ -239,7 +239,7 @@ CREATE TABLE IF NOT EXISTS system_scope (
 
 CREATE TABLE IF NOT EXISTS user_info (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
-	sub VARCHAR(256),
+	sub VARCHAR(255),
 	preferred_username VARCHAR(256),
 	name VARCHAR(256),
 	given_name VARCHAR(256),
@@ -276,7 +276,7 @@ CREATE TABLE IF NOT EXISTS whitelisted_site_scope (
 CREATE TABLE IF NOT EXISTS pairwise_identifier (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
 	identifier VARCHAR(256),
-	sub VARCHAR(256),
+	sub VARCHAR(255),
 	sector_identifier VARCHAR(2048)
 );
 
