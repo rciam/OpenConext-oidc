@@ -358,7 +358,7 @@ CREATE TABLE IF NOT EXISTS saved_registered_client (
 );
 
 
-CREATE INDEX at_tv_idx ON access_token(token_value(767));
+CREATE INDEX at_tv_idx ON access_token(token_value(255));
 CREATE INDEX ts_oi_idx ON token_scope(owner_id);
 CREATE INDEX at_exp_idx ON access_token(expiration);
 CREATE INDEX rf_ahi_idx ON refresh_token(auth_holder_id);
