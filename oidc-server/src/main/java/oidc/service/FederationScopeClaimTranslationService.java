@@ -29,6 +29,7 @@ public class FederationScopeClaimTranslationService implements ScopeClaimTransla
     claims.add("edu_person_scoped_affiliations");
 
     claims.add( "edu_person_entitlements");
+    claims.add( "entitlements");
 
   }
 
