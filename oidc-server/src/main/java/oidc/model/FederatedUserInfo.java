@@ -113,7 +113,6 @@ public class FederatedUserInfo extends DefaultUserInfo {
 
     addListProperty(obj, this.eduPersonScopedAffiliations, "edu_person_scoped_affiliations");
     addListProperty(obj, this.eduPersonEntitlements, "edu_person_entitlements");
-    addListProperty(obj, this.eduPersonEntitlements, "entitlements");
     return obj;
   }
 
