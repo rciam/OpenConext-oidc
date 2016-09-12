@@ -27,6 +27,9 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
   public static final String EDU_PERSON_TARGETED_ID = "urn:mace:dir:attribute-def:eduPersonTargetedID";
   public static final String EDU_PERSON_UNIQUE_ID_URN = "urn:mace:dir:attribute-def:eduPersonUniqueId";
   public static final String EDU_PERSON_UNIQUE_ID_OID = "urn:oid:1.3.6.1.4.1.5923.1.1.1.13";
+  
+  public static final String EDU_PERSON_ASSURANCE_ID_URN = "urn:mace:dir:attribute-def:eduPersonAssurance";
+  public static final String EDU_PERSON_ASSURANCE_ID_OID = "urn:oid:1.3.6.1.4.1.5923.1.1.1.11";
 
   private static final Logger LOG = LoggerFactory.getLogger(DefaultSAMLUserDetailsService.class);
 
@@ -142,6 +145,8 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
     userInfo.setUnspecifiedNameId(unspecifiedNameId);
     userInfo.setSub(sub);
     userInfo.setAuthenticatingAuthority(authenticatingAuthority);
+    userInfo.setAcr(flatten(properties.getOrDefault(EDU_PERSON_ASSURANCE_ID_OID,
+    		properties.get(EDU_PERSON_ASSURANCE_ID_URN))));
 
     userInfo.setName(flatten(properties.getOrDefault("urn:oid:2.16.840.1.113730.3.1.241",
     		properties.get("urn:mace:dir:attribute-def:displayName"))));

@@ -14,8 +14,9 @@ public class FederationScopeClaimTranslationService implements ScopeClaimTransla
     private final Set<String> claims = new HashSet<>();
     private final Set<String> noClaims = new HashSet<>();
 
-    public FederationScopeClaimTranslationService() {
+  public FederationScopeClaimTranslationService() {
         claims.add("sub");
+        claims.add("acr");
 
         claims.add("name");
         claims.add("preferred_username");
