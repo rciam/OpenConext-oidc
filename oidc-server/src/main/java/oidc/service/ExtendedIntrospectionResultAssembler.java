@@ -20,6 +20,7 @@ public class ExtendedIntrospectionResultAssembler extends DefaultIntrospectionRe
     if (userInfo != null && userInfo instanceof FederatedUserInfo) {
       FederatedUserInfo federatedUserInfo = (FederatedUserInfo) userInfo;
       result.put("authenticating_authority", federatedUserInfo.getAuthenticatingAuthority());
+      result.put("acr", federatedUserInfo.getAcr());
       result.put("edu_person_entitlements", federatedUserInfo.getEduPersonEntitlements());
     }
     return result;

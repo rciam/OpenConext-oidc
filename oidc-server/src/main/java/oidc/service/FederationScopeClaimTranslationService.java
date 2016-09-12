@@ -16,6 +16,7 @@ public class FederationScopeClaimTranslationService implements ScopeClaimTransla
 
   public FederationScopeClaimTranslationService() {
     claims.add("sub");
+    claims.add("acr");
 
     claims.add("name");
     claims.add("given_name");

@@ -49,6 +49,7 @@ public class FederatedUserInfoTest {
     assertEquals("John", jsonObject.getAsJsonPrimitive("given_name").getAsString());
     assertEquals("Doe", jsonObject.getAsJsonPrimitive("family_name").getAsString());
     assertEquals("john.doe@example.org", jsonObject.getAsJsonPrimitive("email").getAsString());
+    assertEquals("http://foo.example.org/assurance/loa-1", jsonObject.getAsJsonPrimitive("acr").getAsString());
     assertEquals("0123456789@example.org", jsonObject.getAsJsonPrimitive("edu_person_unique_id").getAsString());
     assertEquals("jdoe@example.org", jsonObject.getAsJsonPrimitive("edu_person_principal_name").getAsString());
     assertEquals("fd9021b35ce0e2bb4fc28d1781e6cbb9eb720fed", jsonObject.getAsJsonPrimitive("edu_person_targeted_id").getAsString());

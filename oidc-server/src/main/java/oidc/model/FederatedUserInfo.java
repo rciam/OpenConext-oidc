@@ -19,6 +19,10 @@ public class FederatedUserInfo extends DefaultUserInfo {
 
   private String unspecifiedNameId;
   private String authenticatingAuthority;
+  
+  /* The Authentication Context Class that the authentication performed satisfied. */
+  private String acr;
+  
   private String eduPersonUniqueId;
   private String eduPersonPrincipalName;
   private String eduPersonTargetedId;
@@ -44,6 +48,35 @@ public class FederatedUserInfo extends DefaultUserInfo {
 
   public void setAuthenticatingAuthority(String authenticatingAuthority) {
     this.authenticatingAuthority = authenticatingAuthority;
+  }
+  
+  /**
+   * Returns a String specifying the Authentication Context Class Reference 
+   * value that identifies the Authentication Context Class that the 
+   * authentication performed satisfied.
+   * 
+   * @return a String specifying the Authentication Context Class Reference 
+   *         value that identifies the Authentication Context Class that the 
+   *         authentication performed satisfied
+   * @see http://openid.net/specs/openid-connect-core-1_0.html#IDToken
+   */
+  @Basic
+  @Column(name = "acr")
+  public String getAcr() {
+    return this.acr;
+  }
+
+  /**
+   * Sets the Authentication Context Class Reference value that identifies the
+   * Authentication Context Class that the authentication performed satisfied.
+   * 
+   * @param acr
+   *            the Authentication Context Class Reference value to set
+   * 
+   * @see http://openid.net/specs/openid-connect-core-1_0.html#IDToken
+   */
+  public void setAcr(String acr) {
+    this.acr = acr;
   }
 
   @Basic
@@ -107,6 +140,7 @@ public class FederatedUserInfo extends DefaultUserInfo {
   @Override
   public JsonObject toJson() {
     JsonObject obj = super.toJson();
+    addProperty(obj, this.acr, "acr");
     addProperty(obj, this.eduPersonUniqueId, "edu_person_unique_id");
     addProperty(obj, this.eduPersonPrincipalName, "edu_person_principal_name");
     addProperty(obj, this.eduPersonTargetedId, "edu_person_targeted_id");
@@ -137,6 +171,7 @@ public class FederatedUserInfo extends DefaultUserInfo {
     return "FederatedUserInfo{" +
         "unspecifiedNameId='" + unspecifiedNameId + '\'' +
         ", authenticatingAuthority='" + authenticatingAuthority + '\'' +
+        ", acr='" + acr + '\'' +
         ", eduPersonUniqueId='" + eduPersonUniqueId + '\'' +
         ", eduPersonPrincipalName='" + eduPersonPrincipalName + '\'' +
         ", eduPersonTargetedId='" + eduPersonTargetedId + '\'' +
