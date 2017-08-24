@@ -4,12 +4,12 @@
 <h1><spring:message code="openconext.welcome.title"/></h1>
 
 <p><spring:message code="openconext.welcome.body"/></p>
-
-<security:authorize access="!hasRole('ROLE_ADMIN')">
+<security:authorize access="!hasRole('ROLE_ADMIN') and !hasRole('ROLE_USER')">
     <p>
         <a class="btn btn-primary btn-large" href="saml/login"><i class="icon-lock icon-white"></i>
             <spring:message code="topbar.login"/></a>
     </p>
 </security:authorize>
+
 
 

@@ -410,7 +410,8 @@
             "title": "Personal",
             "approved_sites": "Manage Approved Sites",
             "active_tokens": "Manage Active Tokens",
-            "profile_information": "View Profile Information"
+            "profile_information": "View Profile Information",
+            "logout": "Log Out"
         },
         "developer": {
             "title": "Developer",

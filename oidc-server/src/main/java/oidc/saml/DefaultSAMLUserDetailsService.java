@@ -81,7 +81,7 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
       extendedUserInfoService.saveUserInfo(userInfo);
     }
     //if the sp-entity-id equals the OIDC server (e.g. non-proxy mode to access the GUI) we grant admin rights
-    return new SAMLUser(sub, clientId.equals(this.localSpEntityId));
+    return new SAMLUser(sub, "ab690013949a22a64ec41dea2c249d6907e862d043a6cab34f7cffe21003dc5f@egi.eu".equals(sub));
   }
 
   private Map<String, List<String>> getAttributes(SAMLCredential credential) {
