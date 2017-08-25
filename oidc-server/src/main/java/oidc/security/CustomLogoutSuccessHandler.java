@@ -58,7 +58,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
                 //--Get the parameter value 
                 List<String> value = parameters.get("redirect");
-                if (value.size() != 0) { //if it exists
+                if (value!=null && value.size() != 0) { //if it exists
                     redirectURL = value.get(0);
                 }
             } catch (Exception ex) {
@@ -68,8 +68,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
         // Decide where to redirect
         System.out.println(" Redirect : " + redirectURL);
-        if (redirectURL
-                == null) {
+        if (redirectURL == null) {
             response.sendRedirect("/oidc/");
         } else {
             response.sendRedirect(redirectURL);
