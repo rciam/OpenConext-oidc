@@ -42,7 +42,6 @@
         <security:intercept-url pattern="/authorize" access="hasRole('ROLE_USER')" />
         <security:intercept-url pattern="/**" access="permitAll" />
         <security:custom-filter before="FIRST" ref="metadataGeneratorFilter"/>
-      
         <security:custom-filter ref="authRequestFilter" after="SECURITY_CONTEXT_FILTER" />
         <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
         <!--<security:anonymous />-->
@@ -51,7 +50,6 @@
         </security:headers>
         <security:csrf request-matcher-ref="apiCsrfProtectionMatcher"/>
     </security:http>
-
 
 
     <!-- Filters for processing of SAML messages -->
@@ -75,7 +73,7 @@
             <!--<property name="defaultTargetUrl" value="/manage/user/profile"/>-->
 <!--        </security:authorize>
         <security:authorize access="hasRole('ROLE_ADMIN')">-->
-            <property name="defaultTargetUrl" value="/"/>
+            <property name="defaultTargetUrl" value="/manage"/>
 <!--        </security:authorize>       -->
     </bean>
     
