@@ -131,8 +131,9 @@ CREATE TABLE IF NOT EXISTS client_details (
 	dynamically_registered BOOLEAN DEFAULT false NOT NULL,
 	allow_introspection BOOLEAN DEFAULT false NOT NULL,
 	id_token_validity_seconds BIGINT DEFAULT 600 NOT NULL,
+	device_code_validity_seconds BIGINT,
 	
-	client_id VARCHAR(255),
+	client_id VARCHAR(256),
 	client_secret VARCHAR(2048),
 	access_token_validity_seconds BIGINT,
 	refresh_token_validity_seconds BIGINT,
@@ -142,14 +143,14 @@ CREATE TABLE IF NOT EXISTS client_details (
 	token_endpoint_auth_method VARCHAR(256),
 	subject_type VARCHAR(256),
 	
-	logo_uri VARCHAR(1000),
-	policy_uri VARCHAR(1000),
-	client_uri VARCHAR(1000),
-	tos_uri VARCHAR(1000),
+	logo_uri VARCHAR(2048),
+	policy_uri VARCHAR(2048),
+	client_uri VARCHAR(2048),
+	tos_uri VARCHAR(2048),
 
-	jwks_uri VARCHAR(1000),
+	jwks_uri VARCHAR(2048),
 	jwks VARCHAR(8192),
-	sector_identifier_uri VARCHAR(1000),
+	sector_identifier_uri VARCHAR(2048),
 	
 	request_object_signing_alg VARCHAR(256),
 	
@@ -165,9 +166,15 @@ CREATE TABLE IF NOT EXISTS client_details (
 	
 	default_max_age BIGINT,
 	require_auth_time BOOLEAN,
-	created_at TIMESTAMP NULL,
-	initiate_login_uri VARCHAR(1000),
+	created_at TIMESTAMP,
+	initiate_login_uri VARCHAR(2048),
 	clear_access_tokens_on_refresh BOOLEAN DEFAULT true NOT NULL,
+	
+	software_statement VARCHAR(4096),
+	software_id VARCHAR(2048),
+	software_version VARCHAR(2048),
+	
+	code_challenge_method VARCHAR(256),
 	
 	UNIQUE (client_id)
 );
