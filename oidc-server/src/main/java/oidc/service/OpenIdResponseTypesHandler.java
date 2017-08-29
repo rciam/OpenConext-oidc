@@ -54,7 +54,7 @@ public class OpenIdResponseTypesHandler implements CustomResponseTypesHandler {
 
     //this is a flaw in the OIDCTokenService as there will be no access token for the id_token flow
     OAuth2AccessTokenEntity accessToken = new OAuth2AccessTokenEntity();
-    OAuth2AccessTokenEntity idToken = connectTokenService.createIdToken(client, request, new Date(), authentication.getName(), accessToken);
+    OAuth2AccessTokenEntity idToken = (OAuth2AccessTokenEntity) connectTokenService.createIdToken(client, request, new Date(), authentication.getName(), accessToken);
 
     String redirect = fromHttpUrl(redirectUri).fragment("id_token=" + idToken.getValue()).build().toUriString();
     String state = authorizationRequest.getRequestParameters().get("state");

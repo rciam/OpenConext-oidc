@@ -1,0 +1,70 @@
+clients:
+  - client_id: "Serif Antonio"
+    secret: "secret"
+    redirectUris:
+      - "https://localhost:8080/redirect"
+      - "https://localhost:8080/redirect2"
+    scopes:
+      - "openid"
+    grantTypes:
+      - "authorization_code"
+      - "implicit"
+      - "client_credentials"
+      - "refresh_token"
+  - client_id: "Pato"
+    secret: "secret"
+    redirectUris:
+      - "https://localhost:8080/redirect"
+      - "https://localhost:8080/redirect2"
+    scopes:
+      - "openid"
+    grantTypes:
+      - "authorization_code"
+      - "implicit"
+      - "client_credentials"
+      - "refresh_token"   
+  - client_id: "Cholo Scrappy"
+    secret: "secret"
+    redirectUris:
+      - "https://localhost:8080/redirect"
+      - "https://localhost:8080/redirect2"
+    scopes:
+      - "openid"
+    grantTypes:
+      - "authorization_code"
+      - "implicit"
+      - "client_credentials"
+      - "refresh_token"   
+  - client_id: "https@//default-client-1"
+    secret: "secret"
+    redirectUris:
+      - "https://localhost:8080/redirect"
+      - "https://localhost:8080/redirect2"
+    scopes:
+      - "openid"
+    grantTypes:
+      - "authorization_code"
+      - "implicit"
+      - "client_credentials"
+      - "refresh_token"
+  - client_id: "https@//default-client-2"
+    secret: "secret"
+    redirectUris:
+      - "https://localhost:8080/redirect"
+      - "https://localhost:8080/redirect2"
+    scopes:
+      - "openid"
+    grantTypes:
+      - "authorization_code"
+      - "implicit"
+      - "client_credentials"
+      - "refresh_token"
+resourceServers:
+  - client_id: "https@//default-client-2"
+    secret: "secret"
+  - client_id: "https@//default-resource-server2"
+    secret: "secret"
+    scopes:
+      - "openid"
+      - "groups"
+
