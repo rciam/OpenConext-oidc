@@ -195,6 +195,7 @@
     <security:authentication-manager id="clientAssertionAuthenticationManager">
         <security:authentication-provider ref="clientAssertionAuthenticationProvider" />
     </security:authentication-manager>
+   
 	
     <bean id="clientAssertionAuthenticationProvider" class="org.mitre.openid.connect.assertion.JWTBearerAuthenticationProvider" />
 
