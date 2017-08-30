@@ -45,6 +45,12 @@
     </logger>
     
     
+    <logger name="org.opensaml.saml2">
+        <level value="debug" />
+    </logger>
+     
+    
+    
 
     <!-- Root Logger -->
     <root>

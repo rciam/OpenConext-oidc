@@ -168,7 +168,7 @@
 
     <bean id="metadataManager" class="org.springframework.security.saml.metadata.CachingMetadataManager">
         <constructor-arg>
-            <list>
+            <list> 
                 <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
                     <constructor-arg>
                         <bean class="org.opensaml.saml2.metadata.provider.HTTPMetadataProvider">
