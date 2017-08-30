@@ -31,7 +31,7 @@
               <artifactId>openid-connect-server-webapp</artifactId>
               <excludes>
                 <!-- Conflicts with our version of oauth2 -->
-                <exclude>WEB-INF/lib/spring-security-oauth2-2.1.0.RELEASE.jar</exclude>
+                <exclude>WEB-INF/lib/spring-security-oauth2-2.0.3.RELEASE.jar</exclude>
               </excludes>
             </overlay>
           </overlays>
@@ -279,7 +279,7 @@
     <dependency>
       <groupId>com.github.tomakehurst</groupId>
       <artifactId>wiremock</artifactId>
-      <version>2.7.1</version>
+      <version>1.57</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -297,7 +297,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>4.3.10.RELEASE</version>
+      <version>4.2.2.RELEASE</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS address (
 CREATE TABLE IF NOT EXISTS approved_site (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
 	user_id VARCHAR(256),
-	client_id VARCHAR(255),
+	client_id VARCHAR(256),
 	creation_date TIMESTAMP NULL,
 	access_date TIMESTAMP NULL,
 	timeout_date TIMESTAMP NULL,
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS authentication_holder (
 	user_auth_id BIGINT,
 	approved BOOLEAN,
 	redirect_uri VARCHAR(2048),
-	client_id VARCHAR(255)
+	client_id VARCHAR(256)
 );
 
 CREATE TABLE IF NOT EXISTS authentication_holder_authority (
@@ -131,7 +131,6 @@ CREATE TABLE IF NOT EXISTS client_details (
 	dynamically_registered BOOLEAN DEFAULT false NOT NULL,
 	allow_introspection BOOLEAN DEFAULT false NOT NULL,
 	id_token_validity_seconds BIGINT DEFAULT 600 NOT NULL,
-	device_code_validity_seconds BIGINT,
 	
 	client_id VARCHAR(256),
 	client_secret VARCHAR(2048),
@@ -166,15 +165,9 @@ CREATE TABLE IF NOT EXISTS client_details (
 	
 	default_max_age BIGINT,
 	require_auth_time BOOLEAN,
-	created_at TIMESTAMP,
+	created_at TIMESTAMP NULL,
 	initiate_login_uri VARCHAR(2048),
 	clear_access_tokens_on_refresh BOOLEAN DEFAULT true NOT NULL,
-	
-	software_statement VARCHAR(4096),
-	software_id VARCHAR(2048),
-	software_version VARCHAR(2048),
-	
-	code_challenge_method VARCHAR(256),
 	
 	UNIQUE (client_id)
 );
@@ -234,7 +227,7 @@ CREATE TABLE IF NOT EXISTS token_scope (
 
 CREATE TABLE IF NOT EXISTS system_scope (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
-	scope VARCHAR(255) NOT NULL,
+	scope VARCHAR(256) NOT NULL,
 	description VARCHAR(4096),
 	icon VARCHAR(256),
 	restricted BOOLEAN DEFAULT false NOT NULL,
@@ -246,7 +239,7 @@ CREATE TABLE IF NOT EXISTS system_scope (
 
 CREATE TABLE IF NOT EXISTS user_info (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
-	sub VARCHAR(255),
+	sub VARCHAR(256),
 	preferred_username VARCHAR(256),
 	name VARCHAR(256),
 	given_name VARCHAR(256),
@@ -272,7 +265,7 @@ CREATE TABLE IF NOT EXISTS user_info (
 CREATE TABLE IF NOT EXISTS whitelisted_site (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
 	creator_user_id VARCHAR(256),
-	client_id VARCHAR(255)
+	client_id VARCHAR(256)
 );
 
 CREATE TABLE IF NOT EXISTS whitelisted_site_scope (
@@ -283,7 +276,7 @@ CREATE TABLE IF NOT EXISTS whitelisted_site_scope (
 CREATE TABLE IF NOT EXISTS pairwise_identifier (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
 	identifier VARCHAR(256),
-	sub VARCHAR(255),
+	sub VARCHAR(256),
 	sector_identifier VARCHAR(2048)
 );
 
@@ -294,7 +287,7 @@ CREATE TABLE IF NOT EXISTS resource_set (
 	icon_uri VARCHAR(1024),
 	rs_type VARCHAR(256),
 	owner VARCHAR(256) NOT NULL,
-	client_id VARCHAR(255)
+	client_id VARCHAR(256)
 );
 
 CREATE TABLE IF NOT EXISTS resource_set_scope (
@@ -365,7 +358,7 @@ CREATE TABLE IF NOT EXISTS saved_registered_client (
 );
 
 
-CREATE INDEX at_tv_idx ON access_token(token_value(255));
+CREATE INDEX at_tv_idx ON access_token(token_value(767));
 CREATE INDEX ts_oi_idx ON token_scope(owner_id);
 CREATE INDEX at_exp_idx ON access_token(expiration);
 CREATE INDEX rf_ahi_idx ON refresh_token(auth_holder_id);

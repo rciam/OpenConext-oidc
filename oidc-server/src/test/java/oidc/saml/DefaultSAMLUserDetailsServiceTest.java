@@ -30,7 +30,6 @@ public class DefaultSAMLUserDetailsServiceTest {
 
   private static final String SP_ENTITY_ID = "sp-entity-id";
   private static final String persistentId = "fd9021b35ce0e2bb4fc28d1781e6cbb9eb720fed";
-  private static final String EPUID = "0123456789@example.org";
 
   private static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -60,44 +59,32 @@ public class DefaultSAMLUserDetailsServiceTest {
   }
 
   @Test
-  public void testLoadUserBySAMLWithEPUIDandPersistentIdentifier() throws Exception {
+  public void testLoadUserBySAMLWithPersistentIdentifier() throws Exception {
     SAMLCredential credential = SAMLTestHelper.parseSAMLCredential(SP_ENTITY_ID, "saml/assertionResponse.xml");
     SAMLUser user = (SAMLUser) subject.loadUserBySAML(credential);
 
     //because relay state equals the OIDC SP
     assertTrue(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")));
 
-    assertEquals(EPUID, user.getUsername());
+    assertEquals(persistentId, user.getUsername());
     assertEquals(federatedUserInfo.toString(), saveUserInfoArgument.toString());
   }
-  
-  @Test
-  public void testLoadUserBySAMLWithOnlyPersistentIdentifier() throws Exception {
-    SAMLCredential credential = SAMLTestHelper.parseSAMLCredential(SP_ENTITY_ID, "saml/onlyEduPersonTargetedIdassertionResponse.xml");
-    SAMLUser user = (SAMLUser) subject.loadUserBySAML(credential);
 
-    //because relay state equals the OIDC SP
-    assertTrue(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")));
-
-    assertEquals(persistentId, user.getUsername());
-    //assertEquals(federatedUserInfo.toString(), saveUserInfoArgument.toString());
-  }
-/* TODO
   @Test
   public void testReprovisionUserWhenAttributesChange() throws Exception {
     findByUserNameReturnValue = new FederatedUserInfo();
-    findByUserNameReturnValue.setTODO("outdated");
+    findByUserNameReturnValue.setSchacHomeOrganizationType("outdated");
 
-    SAMLCredential samlCredential = SAMLTestHelper.parseSAMLCredential("http://mock-sp", "saml/displayNameAssertionResponse.xml");
+    SAMLCredential samlCredential = SAMLTestHelper.parseSAMLCredential("http://mock-sp", "saml/schacHomeOrganizationTypeAssertionResponse.xml");
 
     subject.loadUserBySAML(samlCredential);
 
-    assertEquals("different", saveUserInfoArgument.getTODO());
+    assertEquals("different", saveUserInfoArgument.getSchacHomeOrganizationType());
   }
-*/
+
   @Test
-  public void testLoadSAmlUserWithoutEPUIDorPersistentIdentifier() throws Exception {
-    SAMLCredential samlCredential = SAMLTestHelper.parseSAMLCredential("http://mock-sp", "saml/noEduPersonUniqueIdorTargetedIdassertionResponse.xml");
+  public void testLoadSAmlUserWithoutPersistentIdentifier() throws Exception {
+    SAMLCredential samlCredential = SAMLTestHelper.parseSAMLCredential("http://mock-sp", "saml/noEduPersonTargetedIdassertionResponse.xml");
 
     SAMLUser samlUser = (SAMLUser) subject.loadUserBySAML(samlCredential);
 
