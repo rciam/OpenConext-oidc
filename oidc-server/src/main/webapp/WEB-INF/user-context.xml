@@ -84,8 +84,7 @@
   </bean>
 
   <!-- Handler for successful logout -->
-  <bean id="successLogoutHandler"
-        class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
+  <bean id="successLogoutHandler" class="oidc.security.CustomLogoutSuccessHandler">
     <property name="defaultTargetUrl" value="/"/>
   </bean>
 
