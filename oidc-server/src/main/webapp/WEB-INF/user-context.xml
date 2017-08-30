@@ -89,13 +89,10 @@
   </bean>
 
   <!-- Handler for successful logout -->
-  <bean id="successLogoutHandler"
-        class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
-    <property name="defaultTargetUrl" value="/"/>
-  </bean>
+  <bean id="successLogoutHandler" class="oidc.security.CustomLogoutSuccessHandler"/>
 
   <!-- Override default logout processing filter with the one processing SAML messages -->
-  <bean id="samlLogoutFilter" class="org.springframework.security.saml.SAMLLogoutFilter">
+  <bean id="samlLogoutFilter" class="oidc.security.CustomSAMLLogoutFilter">
     <constructor-arg index="0" ref="successLogoutHandler"/>
     <constructor-arg index="1" ref="logoutHandler"/>
     <constructor-arg index="2" ref="logoutHandler"/>
