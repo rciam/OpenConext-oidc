@@ -120,7 +120,7 @@
             </saml:Attribute>
             <saml:Attribute Name="urn:mace:dir:attribute-def:eduPersonPrincipalName"
                             NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
-                <saml:AttributeValue xsi:type="xs:string">principal_name</saml:AttributeValue>
+                <saml:AttributeValue xsi:type="xs:string">jdoe@example.org</saml:AttributeValue>
             </saml:Attribute>
             <saml:Attribute Name="urn:mace:dir:attribute-def:uid"
                             NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
@@ -136,8 +136,8 @@
                             NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
             >
                 <saml:AttributeValue>
-                    <saml:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified">
-                        urn:collab:person:example.com:local
+                    <saml:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent">
+                        fd9021b35ce0e2bb4fc28d1781e6cbb9eb720fed
                     </saml:NameID>
                 </saml:AttributeValue>
             </saml:Attribute>

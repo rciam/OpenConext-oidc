@@ -40,7 +40,7 @@ public class AbstractTestIntegration {
   protected HttpHeaders headersForTokenFetch;
 
   public static final String TEST_CLIENT = "https@//oidc.localhost.surfconext.nl";
-  public static final String SUB = "75726e3a-636f-6c6c-6162-3a706572736f";
+  public static final String SUB = "0123456789@example.org";
 
   @Rule
   public WireMockRule wireMockRule = new WireMockRule(8889);
@@ -167,29 +167,20 @@ public class AbstractTestIntegration {
     assertEquals(SUB, introspect.get("sub"));
     assertEquals(TEST_CLIENT, introspect.get("client_id"));
     assertEquals("bearer", ((String) introspect.get("token_type")).toLowerCase());
-    assertEquals("surfnet.nl", introspect.get("schac_home"));
-    assertEquals("urn:collab:person:example.com:local", introspect.get("unspecified_id"));
     assertEquals("http://mock-idp", introspect.get("authenticating_authority"));
+    assertEquals(asList("http://xstor.com/contracts/HEd123", "urn:mace:washington.edu:confocalMicroscope"), introspect.get("edu_person_entitlements"));
   }
 
   protected void assertUserInfoResult(Map<String, Object> userInfo) {
     assertEquals(SUB, userInfo.get("sub"));
     assertEquals("John Doe", userInfo.get("name"));
-    assertEquals("John Doe", userInfo.get("preferred_username"));
     assertEquals("John", userInfo.get("given_name"));
     assertEquals("Doe", userInfo.get("family_name"));
-    assertEquals("NL", userInfo.get("locale"));
+    // TODO assertEquals("NL", userInfo.get("locale"));
     assertEquals("john.doe@example.org", userInfo.get("email"));
 
-    assertEquals("surfnet.nl", userInfo.get("schac_home_organization"));
-    assertEquals("institution", userInfo.get("schac_home_organization_type"));
-    assertEquals("principal_name", userInfo.get("edu_person_principal_name"));
-    assertEquals("fd9021b35ce0e2bb4fc28d1781e6cbb9eb720fed", userInfo.get("edu_person_targeted_id"));
-    assertEquals(asList("student", "faculty"), userInfo.get("edu_person_affiliations"));
+    // TODO assertEquals("0123456789@example.org", userInfo.get("edu_person_unique_id"));
     assertEquals(asList("student", "faculty"), userInfo.get("edu_person_scoped_affiliations"));
-    assertEquals(singletonList("surfnet"), userInfo.get("is_member_ofs"));
-    assertEquals(singletonList("personal"), userInfo.get("schac_personal_unique_codes"));
-    assertEquals(asList("uid2", "uid1"), userInfo.get("uids"));
   }
 
   protected MultiValueMap<String, String> getAuthorizationCodeFormParameters(String authorizationCode) {

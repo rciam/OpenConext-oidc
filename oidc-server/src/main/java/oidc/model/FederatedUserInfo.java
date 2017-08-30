@@ -1,10 +1,8 @@
 package oidc.model;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import org.apache.commons.ssl.asn1.ASN1Object;
 import org.mitre.openid.connect.model.DefaultUserInfo;
 import org.springframework.util.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -16,30 +14,21 @@ import java.util.Set;
 @Entity
 @Table(name = "user_info")
 public class FederatedUserInfo extends DefaultUserInfo {
+	
+  private static final long serialVersionUID = 7368566484262998945L;
 
-  private String schacHomeOrganization;
   private String unspecifiedNameId;
   private String authenticatingAuthority;
-  private String schacHomeOrganizationType;
+  
+  /* The Authentication Context Class that the authentication performed satisfied. */
+  private String acr;
+  
+  private String eduPersonUniqueId;
   private String eduPersonPrincipalName;
   private String eduPersonTargetedId;
 
-  private Set<String> eduPersonAffiliations = new HashSet<>();
   private Set<String> eduPersonScopedAffiliations = new HashSet<>();
-  private Set<String> isMemberOfs = new HashSet<>();
   private Set<String> eduPersonEntitlements = new HashSet<>();
-  private Set<String> schacPersonalUniqueCodes = new HashSet<>();
-  private Set<String> uids = new HashSet<>();
-
-  @Basic
-  @Column(name = "schac_home_organization")
-  public String getSchacHomeOrganization() {
-    return schacHomeOrganization;
-  }
-
-  public void setSchacHomeOrganization(String schacHomeOrganization) {
-    this.schacHomeOrganization = schacHomeOrganization;
-  }
 
   @Basic
   @Column(name = "unspecified_name_id")
@@ -60,17 +49,46 @@ public class FederatedUserInfo extends DefaultUserInfo {
   public void setAuthenticatingAuthority(String authenticatingAuthority) {
     this.authenticatingAuthority = authenticatingAuthority;
   }
+  
+  /**
+   * Returns a String specifying the Authentication Context Class Reference 
+   * value that identifies the Authentication Context Class that the 
+   * authentication performed satisfied.
+   * 
+   * @return a String specifying the Authentication Context Class Reference 
+   *         value that identifies the Authentication Context Class that the 
+   *         authentication performed satisfied
+   * @see http://openid.net/specs/openid-connect-core-1_0.html#IDToken
+   */
+  @Basic
+  @Column(name = "acr")
+  public String getAcr() {
+    return this.acr;
+  }
+
+  /**
+   * Sets the Authentication Context Class Reference value that identifies the
+   * Authentication Context Class that the authentication performed satisfied.
+   * 
+   * @param acr
+   *            the Authentication Context Class Reference value to set
+   * 
+   * @see http://openid.net/specs/openid-connect-core-1_0.html#IDToken
+   */
+  public void setAcr(String acr) {
+    this.acr = acr;
+  }
 
   @Basic
-  @Column(name = "schac_home_organization_type")
-  public String getSchacHomeOrganizationType() {
-    return schacHomeOrganizationType;
+  @Column(name = "edu_person_unique_id")
+  public String getEduPersonUniqueId() {
+    return eduPersonUniqueId;
   }
 
-  public void setSchacHomeOrganizationType(String schacHomeOrganizationType) {
-    this.schacHomeOrganizationType = schacHomeOrganizationType;
+  public void setEduPersonUniqueId(String eduPersonUniqueId) {
+    this.eduPersonUniqueId = eduPersonUniqueId;
   }
-
+  
   @Basic
   @Column(name = "edu_person_principal_name")
   public String getEduPersonPrincipalName() {
@@ -93,20 +111,6 @@ public class FederatedUserInfo extends DefaultUserInfo {
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(
-      name = "user_edu_person_affiliation",
-      joinColumns = @JoinColumn(name = "user_id")
-  )
-  @Column(name = "edu_person_affiliation")
-  public Set<String> getEduPersonAffiliations() {
-    return eduPersonAffiliations;
-  }
-
-  public void setEduPersonAffiliations(Set<String> eduPersonAffiliations) {
-    this.eduPersonAffiliations = eduPersonAffiliations;
-  }
-
-  @ElementCollection(fetch = FetchType.EAGER)
-  @CollectionTable(
       name = "user_edu_person_scoped_affiliation",
       joinColumns = @JoinColumn(name = "user_id")
   )
@@ -117,20 +121,6 @@ public class FederatedUserInfo extends DefaultUserInfo {
 
   public void setEduPersonScopedAffiliations(Set<String> eduPersonScopedAffiliations) {
     this.eduPersonScopedAffiliations = eduPersonScopedAffiliations;
-  }
-
-  @ElementCollection(fetch = FetchType.EAGER)
-  @CollectionTable(
-      name = "user_is_member_of",
-      joinColumns = @JoinColumn(name = "user_id")
-  )
-  @Column(name = "is_member_of")
-  public Set<String> getIsMemberOfs() {
-    return isMemberOfs;
-  }
-
-  public void setIsMemberOfs(Set<String> isMemberOfs) {
-    this.isMemberOfs = isMemberOfs;
   }
 
   @ElementCollection(fetch = FetchType.EAGER)
@@ -147,48 +137,16 @@ public class FederatedUserInfo extends DefaultUserInfo {
     this.eduPersonEntitlements = eduPersonEntitlements;
   }
 
-  @ElementCollection(fetch = FetchType.EAGER)
-  @CollectionTable(
-      name = "user_schac_personal_unique_code",
-      joinColumns = @JoinColumn(name = "user_id")
-  )
-  @Column(name = "schac_personal_unique_code")
-  public Set<String> getSchacPersonalUniqueCodes() {
-    return schacPersonalUniqueCodes;
-  }
-
-  public void setSchacPersonalUniqueCodes(Set<String> schacPersonalUniqueCodes) {
-    this.schacPersonalUniqueCodes = schacPersonalUniqueCodes;
-  }
-
-  @ElementCollection(fetch = FetchType.EAGER)
-  @CollectionTable(
-      name = "user_uid",
-      joinColumns = @JoinColumn(name = "user_id")
-  )
-  @Column(name = "uid")
-  public Set<String> getUids() {
-    return uids;
-  }
-
-  public void setUids(Set<String> uids) {
-    this.uids = uids;
-  }
-
   @Override
   public JsonObject toJson() {
     JsonObject obj = super.toJson();
-    addProperty(obj, this.schacHomeOrganization, "schac_home_organization");
-    addProperty(obj, this.schacHomeOrganizationType, "schac_home_organization_type");
+    addProperty(obj, this.acr, "acr");
+    addProperty(obj, this.eduPersonUniqueId, "edu_person_unique_id");
     addProperty(obj, this.eduPersonPrincipalName, "edu_person_principal_name");
     addProperty(obj, this.eduPersonTargetedId, "edu_person_targeted_id");
 
-    addListProperty(obj, this.eduPersonAffiliations, "edu_person_affiliations");
     addListProperty(obj, this.eduPersonScopedAffiliations, "edu_person_scoped_affiliations");
-    addListProperty(obj, this.isMemberOfs, "is_member_ofs");
     addListProperty(obj, this.eduPersonEntitlements, "edu_person_entitlements");
-    addListProperty(obj, this.schacPersonalUniqueCodes, "schac_personal_unique_codes");
-    addListProperty(obj, this.uids, "uids");
     return obj;
   }
 
@@ -211,18 +169,14 @@ public class FederatedUserInfo extends DefaultUserInfo {
   @Override
   public String toString() {
     return "FederatedUserInfo{" +
-        "schacHomeOrganization='" + schacHomeOrganization + '\'' +
-        ", unspecifiedNameId='" + unspecifiedNameId + '\'' +
+        "unspecifiedNameId='" + unspecifiedNameId + '\'' +
         ", authenticatingAuthority='" + authenticatingAuthority + '\'' +
-        ", schacHomeOrganizationType='" + schacHomeOrganizationType + '\'' +
+        ", acr='" + acr + '\'' +
+        ", eduPersonUniqueId='" + eduPersonUniqueId + '\'' +
         ", eduPersonPrincipalName='" + eduPersonPrincipalName + '\'' +
         ", eduPersonTargetedId='" + eduPersonTargetedId + '\'' +
-        ", eduPersonAffiliations=" + eduPersonAffiliations +
         ", eduPersonScopedAffiliations=" + eduPersonScopedAffiliations +
-        ", isMemberOfs=" + isMemberOfs +
         ", eduPersonEntitlements=" + eduPersonEntitlements +
-        ", schacPersonalUniqueCodes=" + schacPersonalUniqueCodes +
-        ", uids=" + uids +
         '}';
   }
 

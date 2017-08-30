@@ -25,6 +25,11 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
 
   public static final String PERSISTENT_NAME_ID_FORMAT = "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent";
   public static final String EDU_PERSON_TARGETED_ID = "urn:mace:dir:attribute-def:eduPersonTargetedID";
+  public static final String EDU_PERSON_UNIQUE_ID_URN = "urn:mace:dir:attribute-def:eduPersonUniqueId";
+  public static final String EDU_PERSON_UNIQUE_ID_OID = "urn:oid:1.3.6.1.4.1.5923.1.1.1.13";
+  
+  public static final String EDU_PERSON_ASSURANCE_ID_URN = "urn:mace:dir:attribute-def:eduPersonAssurance";
+  public static final String EDU_PERSON_ASSURANCE_ID_OID = "urn:oid:1.3.6.1.4.1.5923.1.1.1.11";
 
   private static final Logger LOG = LoggerFactory.getLogger(DefaultSAMLUserDetailsService.class);
 
@@ -50,14 +55,19 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
 
     //we saved the clientId on the relay state in ProxySAMLEntryPoint#getProfileOptions
     String clientId = credential.getRelayState();
+    final List<String> epuIds = properties.getOrDefault(EDU_PERSON_UNIQUE_ID_OID, 
+    		properties.getOrDefault(EDU_PERSON_UNIQUE_ID_URN, new ArrayList<String>()));
     List<String> persistentIds = properties.get(EDU_PERSON_TARGETED_ID);
     String sub;
-    if (CollectionUtils.isEmpty(persistentIds)) {
-      sub = hashedPairwiseIdentifierService.getIdentifier(unspecifiedNameId, clientId);
-      LOG.info("Using the hashedPairwiseIdentifierService for the {} sub for {} and {}", sub, unspecifiedNameId, clientId);
-    } else {
-      sub = persistentIds.get(0);
-      LOG.info("Using the persistent identifier for the {} sub for {} and {}", sub, unspecifiedNameId, clientId);
+    if (!CollectionUtils.isEmpty(epuIds)) {
+    	sub = epuIds.get(0);
+        LOG.info("Using the eduPersonUniqueId for the {} sub for {} and {}", sub, unspecifiedNameId, clientId);
+    } else if (!CollectionUtils.isEmpty(persistentIds)) {
+    	sub = persistentIds.get(0);
+        LOG.info("Using the persistent identifier for the {} sub for {} and {}", sub, unspecifiedNameId, clientId);
+    } else {      
+    	sub = hashedPairwiseIdentifierService.getIdentifier(unspecifiedNameId, clientId);
+    	LOG.info("Using the hashedPairwiseIdentifierService for the {} sub for {} and {}", sub, unspecifiedNameId, clientId);
     }
     String authenticatingAuthority = getAuthenticatingAuthority(credential);
 
@@ -136,27 +146,29 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
     userInfo.setUnspecifiedNameId(unspecifiedNameId);
     userInfo.setSub(sub);
     userInfo.setAuthenticatingAuthority(authenticatingAuthority);
+    userInfo.setAcr(flatten(properties.getOrDefault(EDU_PERSON_ASSURANCE_ID_OID,
+    		properties.get(EDU_PERSON_ASSURANCE_ID_URN))));
 
-    userInfo.setName(flatten(properties.get("urn:mace:dir:attribute-def:cn")));
-    userInfo.setPreferredUsername(flatten(properties.get("urn:mace:dir:attribute-def:displayName")));
-    userInfo.setNickname(flatten(properties.get("urn:mace:dir:attribute-def:displayName")));
-    userInfo.setGivenName(flatten(properties.get("urn:mace:dir:attribute-def:givenName")));
-    userInfo.setFamilyName(flatten(properties.get("urn:mace:dir:attribute-def:sn")));
-    userInfo.setLocale(flatten(properties.get("urn:mace:dir:attribute-def:preferredLanguage")));
-    userInfo.setEmail(flatten(properties.get("urn:mace:dir:attribute-def:mail")));
+    userInfo.setName(flatten(properties.getOrDefault("urn:oid:2.16.840.1.113730.3.1.241",
+    		properties.get("urn:mace:dir:attribute-def:displayName"))));
+    userInfo.setGivenName(flatten(properties.getOrDefault("urn:oid:2.5.4.42",
+    		properties.get("urn:mace:dir:attribute-def:givenName"))));
+    userInfo.setFamilyName(flatten(properties.getOrDefault("urn:oid:2.5.4.4",
+    		properties.get("urn:mace:dir:attribute-def:sn"))));
+    userInfo.setEmail(flatten(properties.getOrDefault("urn:oid:0.9.2342.19200300.100.1.3",
+    		properties.get("urn:mace:dir:attribute-def:mail"))));
 
-    userInfo.setSchacHomeOrganization(flatten(properties.get("urn:mace:terena.org:attribute-def:schacHomeOrganization")));
-    userInfo.setSchacHomeOrganizationType(flatten(properties.get("urn:mace:terena.org:attribute-def:schacHomeOrganizationType")));
-
-    userInfo.setEduPersonAffiliations(set(properties.get("urn:mace:dir:attribute-def:eduPersonAffiliation")));
-    userInfo.setEduPersonScopedAffiliations(set(properties.get("urn:mace:dir:attribute-def:eduPersonScopedAffiliation")));
-
-    userInfo.setIsMemberOfs(set(properties.get("urn:mace:dir:attribute-def:isMemberOf")));
-    userInfo.setEduPersonEntitlements(set(properties.get("urn:mace:dir:attribute-def:eduPersonEntitlement")));
-    userInfo.setSchacPersonalUniqueCodes(set(properties.get("urn:mace:dir:attribute-def:schacPersonalUniqueCode")));
-    userInfo.setEduPersonPrincipalName(flatten(properties.get("urn:mace:dir:attribute-def:eduPersonPrincipalName")));
-    userInfo.setUids(set(properties.get("urn:mace:dir:attribute-def:uid")));
-    userInfo.setEduPersonTargetedId(flatten(properties.get("urn:mace:dir:attribute-def:eduPersonTargetedID")));
+    userInfo.setEduPersonScopedAffiliations(set(properties.getOrDefault("urn:oid:1.3.6.1.4.1.5923.1.1.1.9",
+    		properties.get("urn:mace:dir:attribute-def:eduPersonScopedAffiliation"))));
+    
+    userInfo.setEduPersonEntitlements(set(properties.getOrDefault("urn:oid:1.3.6.1.4.1.5923.1.1.1.7",
+    		properties.get("urn:mace:dir:attribute-def:eduPersonEntitlement"))));
+    userInfo.setEduPersonUniqueId(flatten(properties.getOrDefault(EDU_PERSON_UNIQUE_ID_OID,
+    		properties.get(EDU_PERSON_UNIQUE_ID_URN))));
+    userInfo.setEduPersonPrincipalName(flatten(properties.getOrDefault("urn:oid:1.3.6.1.4.1.5923.1.1.1.6",
+    		properties.get("urn:mace:dir:attribute-def:eduPersonPrincipalName"))));
+    userInfo.setEduPersonTargetedId(flatten(properties.getOrDefault("urn:oid:1.3.6.1.4.1.5923.1.1.1.10",
+    		properties.get("urn:mace:dir:attribute-def:eduPersonTargetedID"))));
 
     return userInfo;
   }

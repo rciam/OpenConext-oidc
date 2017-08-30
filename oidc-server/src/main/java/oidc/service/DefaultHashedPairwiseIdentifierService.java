@@ -1,14 +1,12 @@
 package oidc.service;
 
 import oidc.model.FederatedUserInfo;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.mitre.oauth2.model.ClientDetailsEntity;
 import org.mitre.openid.connect.model.UserInfo;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.nio.ByteBuffer;
 import java.util.UUID;
 
 @Primary

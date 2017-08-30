@@ -43,7 +43,7 @@
         </ds:Signature>
         <saml:Subject>
             <saml:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">
-                urn:collab:person:example.com:test
+                urn:collab:person:example.com:local
             </saml:NameID>
             <saml:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
                 <saml:SubjectConfirmationData NotOnOrAfter="2016-02-12T09:39:03Z"
@@ -67,17 +67,77 @@
             </saml:AuthnContext>
         </saml:AuthnStatement>
         <saml:AttributeStatement>
+            <saml:Attribute Name="urn:mace:dir:attribute-def:cn"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">John Doe</saml:AttributeValue>
+            </saml:Attribute>
+            <saml:Attribute Name="urn:mace:dir:attribute-def:displayName"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">John Doe</saml:AttributeValue>
+            </saml:Attribute>
+            <saml:Attribute Name="urn:mace:dir:attribute-def:givenName"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">John</saml:AttributeValue>
+            </saml:Attribute>
+            <saml:Attribute Name="urn:mace:dir:attribute-def:sn"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">Doe</saml:AttributeValue>
+            </saml:Attribute>
+            <saml:Attribute Name="urn:mace:dir:attribute-def:preferredLanguage"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">NL</saml:AttributeValue>
+            </saml:Attribute>
+            <saml:Attribute Name="urn:mace:dir:attribute-def:mail"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">john.doe@example.org</saml:AttributeValue>
+            </saml:Attribute>
+            <saml:Attribute Name="urn:mace:terena.org:attribute-def:schacHomeOrganization"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">surfnet.nl</saml:AttributeValue>
+            </saml:Attribute>
             <saml:Attribute Name="urn:mace:terena.org:attribute-def:schacHomeOrganizationType"
-                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
-            >
-                <saml:AttributeValue xsi:type="xs:string">different</saml:AttributeValue>
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">institution</saml:AttributeValue>
+            </saml:Attribute>
+            <saml:Attribute Name="urn:mace:dir:attribute-def:eduPersonAffiliation"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">student</saml:AttributeValue>
+                <saml:AttributeValue xsi:type="xs:string">faculty</saml:AttributeValue>
+            </saml:Attribute>
+            <saml:Attribute Name="urn:mace:dir:attribute-def:isMemberOf"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">surfnet</saml:AttributeValue>
+            </saml:Attribute>
+            <saml:Attribute Name="urn:mace:dir:attribute-def:eduPersonEntitlement"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">http://xstor.com/contracts/HEd123</saml:AttributeValue>
+                <saml:AttributeValue xsi:type="xs:string">urn:mace:washington.edu:confocalMicroscope
+                </saml:AttributeValue>
+            </saml:Attribute>
+            <saml:Attribute Name="urn:mace:dir:attribute-def:schacPersonalUniqueCode"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">personal</saml:AttributeValue>
+            </saml:Attribute>
+            <saml:Attribute Name="urn:mace:dir:attribute-def:eduPersonPrincipalName"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">jdoe@example.org</saml:AttributeValue>
+            </saml:Attribute>
+            <saml:Attribute Name="urn:mace:dir:attribute-def:uid"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">uid2</saml:AttributeValue>
+                <saml:AttributeValue xsi:type="xs:string">uid1</saml:AttributeValue>
+            </saml:Attribute>
+            <saml:Attribute Name="urn:mace:dir:attribute-def:eduPersonScopedAffiliation"
+                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xsi:type="xs:string">student</saml:AttributeValue>
+                <saml:AttributeValue xsi:type="xs:string">faculty</saml:AttributeValue>
             </saml:Attribute>
             <saml:Attribute Name="urn:mace:dir:attribute-def:eduPersonTargetedID"
                             NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
             >
                 <saml:AttributeValue>
-                    <saml:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent">
-                        fd9021b35ce0e2bb4fc28d1781e6cbb9eb720fed
+                    <saml:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified">
+                        urn:collab:person:example.com:local
                     </saml:NameID>
                 </saml:AttributeValue>
             </saml:Attribute>
