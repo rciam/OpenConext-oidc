@@ -7,12 +7,13 @@
 <o:header title="${title}" />
 <o:topbar pageName="Home" />
 <div class="container-fluid main">
-	<div class="row-fluid">
-		<div class="span12">
-			<div class="hero-unit">
-				<o:oidcLandingPageWelcome />
-			</div>
-		</div>
-	</div>
+        <div class="row-fluid">
+                <o:sidebar />
+                <div class="span10">
+                        <div class="hero-unit">
+                                <o:landingPageWelcome />
+                        </div>
+                </div>
+        </div>
 </div>
 <o:footer />
