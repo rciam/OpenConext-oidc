@@ -223,7 +223,10 @@
         "refresh": "Refresh",
         "save": "Save",
         "scopes": "Scopes",
-        "statistics": "Statistics"
+        "statistics": "Statistics",
+	"statistics": "Statistics",
+        "service": "Service",
+        "services": "Services"
     },
     "dynreg": {
         "client-id-placeholder": "Enter Client ID",
@@ -410,6 +413,7 @@
             "title": "Personal",
             "approved_sites": "Manage Approved Sites",
             "active_tokens": "Manage Active Tokens",
+	    "services": "Manage Services",
             "profile_information": "View Profile Information"
         },
         "developer": {
@@ -489,6 +493,24 @@
         "welcome" : {
             "title": "Welcome",
             "body": "OpenID Connect (OIDC) is an identity protocol built on top of the OAuth2 authorization framework. With OIDC SURFconext it is possible for Service Providers to join the SURFnet federation without having to implement the SAML2 protocol."
+        }
+    },
+    "service": {
+        "manage": "Manage Services",
+        "service-table": {
+            "search": "Search...",
+            "no-service": "There are no services.",
+            "text": "Access tokens are usually short-lived and provide services with access to specific resources. ID Tokens are specialized access tokens to facilitate log on using OpenID Connect. Refresh tokens are usually long-lived and provide services with the ability to get new access tokens without end-user involvement.",
+            "no-matches": "There are no services that match your search criteria.",
+            "confirm-token": "Are you sure sure you would like to revoke this token?",
+            "confirm-service": "Are you sure sure you would like to revoke this service?",
+            "match": {
+                "description": "description",
+                "id": "id",
+                "logo": "logo",
+                "name": "name",
+                "scope": "scope"
+            }
         }
     }
 }
