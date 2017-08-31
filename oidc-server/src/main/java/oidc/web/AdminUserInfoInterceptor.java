@@ -19,9 +19,7 @@ public class AdminUserInfoInterceptor extends UserInfoInterceptor {
       Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
       if (!CollectionUtils.isEmpty(authorities)) {
         for (GrantedAuthority authority : authorities) {
-          if ("ROLE_ADMIN".equals(authority.getAuthority())) {
-            return super.preHandle(request, response, handler);
-          }
+          return super.preHandle(request, response, handler);
         }
       }
     }
