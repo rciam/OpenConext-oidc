@@ -760,6 +760,8 @@ var ServiceListView = Backbone.View.extend({
 		});
 		var _self = this;
 
+		var viewSum = 0;
+
 		_.each(this.filteredModel.models, function(service, index) {
 			var view = _self.getView(service.get('id'));
 			if (!view) {
@@ -767,11 +769,13 @@ var ServiceListView = Backbone.View.extend({
 				return;
 			}
 
+			viewSum += 1;
+
 			// only show/render clients on the current page
 
 			console.log(':: ' + index + ' ' + num + ' ' + Math.ceil((index + 1) / 10) != num);
 
-			if (Math.ceil((index + 1) / 10) != num) {
+			if (Math.ceil(viewSum / 10) != num) {
 				$(view.el).hide();
 			} else {
 				if (!view.isServiceRendered) {
