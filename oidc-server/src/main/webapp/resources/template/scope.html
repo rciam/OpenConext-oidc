@@ -228,6 +228,11 @@ _.each(scopes, function(s, index) {
 %>
 	<span class="permissionScopes" style="cursor: default;"><%-ss.get('description')%><% if(index < arrayLength - 1){%><%-comma%><%} %></span>
 <%
+	} else { 
+%>
+	<span class="permissionScopes" style="cursor: default;"><%-s%><% if(index < arrayLength - 1){%><%-comma%><%} %></span>
+
+<%
 	}
 
 });
