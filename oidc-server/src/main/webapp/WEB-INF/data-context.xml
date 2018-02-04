@@ -39,7 +39,7 @@
   </bean>
 
 	<bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter" depends-on="flyway">
-		<property name="databasePlatform" value="org.eclipse.persistence.platform.database.MySQLPlatform" />
+		<property name="databasePlatform" value="org.eclipse.persistence.platform.database.PostgreSQLPlatform" />
 		<property name="showSql" value="true" />
 	</bean>
 
