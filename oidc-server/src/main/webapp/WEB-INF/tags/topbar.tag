@@ -20,6 +20,14 @@
                 <a id="header_lang_nl" href="#" class="${pageContext.response.locale == "nl" ? "selected" : ""}"><spring:message code="openconext.header.lang_nl"/></a>
             </li>
         </ul>
+	<security:authorize access="hasRole('ROLE_ADMIN')">
+        <div style="margin-left: 60px; float: left;">
+            <p>
+                <a class="btn btn-primary btn-large" style="padding-top: 4px; padding-bottom: 4px; padding-left: 16px; padding-right: 16px;" href="saml/logout"><i class="icon-lock icon-white"></i>
+                    <spring:message code="topbar.logout"/></a>
+            </p>
+	</div>
+        </security:authorize>
         <ul class="links">
             <li>
                 <a href="<spring:message code="openconext.footer.git_link"/>" target="_blank">
