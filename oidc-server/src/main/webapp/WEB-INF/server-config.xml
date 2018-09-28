@@ -32,7 +32,7 @@
 
 	<context:property-placeholder location="classpath:application.oidc.properties" />
 
-	<bean id="configBean" class="org.mitre.openid.connect.config.ConfigurationPropertiesBean">
+	<bean id="configBean" class="oidc.config.CustomConfigurationPropertiesBean">
 	    
 	    <!-- This property is changed to match the deployed URL of the example overlay project. -->
 	    <!-- This property sets the root URL of the server, known as the issuer -->
@@ -49,6 +49,24 @@
 
 		<!-- This property forces the issuer value to start with "https" -->
 		<!-- <property name="forceHttps" value="true" /> -->
+
+    <!-- This property sets the maxinum lifetime of refresh tokens, in seconds. -->
+		<property name="maxRefreshTokenLifeTime" value="34128000" />
+
+		<!-- This property sets the maxinum lifetime of access tokens, in seconds. -->
+		<property name="maxAccessTokenLifeTime" value="1000000" />
+
+		<!-- This property sets the maxinum lifetime of id tokens, in seconds. -->
+		<property name="maxIdTokenLifeTime" value="86400" />
+
+		<!-- This property sets the default lifetime of refresh tokens, in seconds. -->
+		<property name="defaultRefreshTokenLifeTime" value="28800" />
+
+		<!-- This property sets the default lifetime of access tokens, in seconds. -->
+		<property name="defaultAccessTokenLifeTime" value="3600" />
+
+		<!-- This property sets the default lifetime of id tokens, in seconds. -->
+    <property name="defaultIdTokenLifeTime" value="600" />
 
 	</bean>
 	

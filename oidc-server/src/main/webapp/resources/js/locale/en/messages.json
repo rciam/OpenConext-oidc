@@ -167,7 +167,11 @@
             "unknown": "(Unknown)",
             "user-info-crypto-algorithm": "User Info Endpoint Encryption Algorithm",
             "user-info-crypto-method": "User Info Endpoint Encryption Method",
-            "user-info-signing-algorithm": "User Info Endpoint Signing Algorithm"
+            "user-info-signing-algorithm": "User Info Endpoint Signing Algorithm",
+            "timeout-bound-error": "Invalid timeout value",
+            "access-token-duration-error": "The duration of access token is out of range.",
+            "refresh-token-duration-error": "The duration of refresh token is out of range.",
+            "id-token-duration-error": "The duration of id token is out of range."
         },
         "client-table": {
             "allow-introspection-tooltip": "This client can perform token introspection",

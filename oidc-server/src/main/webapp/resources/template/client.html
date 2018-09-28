@@ -515,10 +515,10 @@
             <div class="control-group" id="accessTokenValidityTime">
                 <label class="control-label" data-i18n="client.client-form.access-token-timeout">Access Token Timeout</label>
                 <div class="controls">
-					<div>
+					<!-- <div>
                         <input type="checkbox" id="disableAccessTokenTimeout" <%-(client.accessTokenValiditySeconds == null ? 'checked' : '')%>/>
                         <label for="disableAccessTokenTimeout" class="checkbox" data-i18n="client.client-form.access-token-no-timeout">Access tokens do not time out</label>
-					</div>
+					</div> -->
                     <div>
                         <input type="text" class="" value="<%-(client.accessTokenValiditySeconds == null ? '' : client.accessTokenValiditySeconds)%>" id="access-token-timeout-time" size="16" style="width:8em;">
 						<select id="access-token-timeout-unit" style="width:8em;">
@@ -527,7 +527,7 @@
 							<option data-i18n="client.client-form.hours">hours</option>
 						</select>
                     </div>
-                    <p class="help-block" data-i18n="client.client-form.token-timeout-help">Enter this time in seconds, minutes, or hours.</p>
+                    <p class="help-block" data-i18n="client.client-form.token-timeout-help">Enter this time in seconds, minutes, or hours (Max value is <%- maxAccessTokenValue %> seconds).</p>
                 </div>
             </div>
 
@@ -543,7 +543,7 @@
 							<option data-i18n="client.client-form.hours">hours</option>
 						</select>
                     </div>
-                    <p class="help-block" data-i18n="client.client-form.token-timeout-help">Enter this time in seconds, minutes, or hours.</p>
+                    <p class="help-block" data-i18n="client.client-form.token-timeout-help">Enter this time in seconds, minutes, or hours (Max value is <%- maxIdTokenValue %> seconds(11.5 days)).</p>
                 </div>
             </div>
 
@@ -568,10 +568,10 @@
                         <input type="checkbox" id="clearAccessTokensOnRefresh" <%-(client.clearAccessTokensOnRefresh == true ? 'checked' : '')%>>
                         <label for="clearAccessTokensOnRefresh" class="checkbox" data-i18n="client.client-form.clear-access-tokens">Active access tokens are revoked when the refresh token is used</label>
 					</div>
-					<div>
+					<!-- <div>
                         <input type="checkbox" id="disableRefreshTokenTimeout" <%-(client.refreshTokenValiditySeconds == null ? 'checked' : '')%>/> 
                         <label for="disableRefreshTokenTimeout" class="checkbox" data-i18n="client.client-form.refresh-tokens-no-expire">Refresh tokens do not time out</label>
-					</div>
+					</div> -->
                     <div>
                         <input type="text" class="" value="<%-(client.refreshTokenValiditySeconds == null ? '' : client.refreshTokenValiditySeconds)%>" id="refresh-token-timeout-time" size="16" style="width:8em;">
 						<select id="refresh-token-timeout-unit" style="width:8em;">
@@ -580,7 +580,7 @@
 							<option data-i18n="client.client-form.hours">hours</option>
 						</select>
 					</div>
-                    <p class="help-block" data-i18n="client.client-form.token-timeout-help">Enter this time in seconds, minutes, or hours.</p>
+                    <p class="help-block" data-i18n="client.client-form.token-timeout-help">Enter this time in seconds, minutes, or hours (Max value is <%- maxRefreshTokenValue %> seconds.</p>
                 </div>
             </div>
 	</div>
