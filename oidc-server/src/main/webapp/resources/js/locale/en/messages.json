@@ -159,6 +159,7 @@
             "subject-type": "Subject Type",
             "terms": "Terms of Service",
             "terms-help": "URL for the Terms of Service of this client, will be displayed to the user",
+            "token-exchange" : "token exchange",
             "token-signing-algorithm": "Token Endpoint Authentication Signing Algorithm",
             "tokens": "Tokens",
             "type": "Application Type",

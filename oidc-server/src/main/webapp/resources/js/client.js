@@ -802,6 +802,7 @@ var ClientFormView = Backbone.View.extend({
     	'implicit': 'implicit',
     	'client_credentials': 'client_credentials',
 		'redelegate': 'urn:ietf:params:oauth:grant_type:redelegate',
+		'token-exchange': 'urn:ietf:params:oauth:grant-type:token-exchange',
     	'refresh_token': 'refresh_token'
     },
     
