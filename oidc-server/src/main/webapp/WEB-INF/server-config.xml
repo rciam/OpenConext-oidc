@@ -50,6 +50,14 @@
 		<!-- This property forces the issuer value to start with "https" -->
 		<!-- <property name="forceHttps" value="true" /> -->
 
+		<!-- This property sets the set of namespaces for language translation files. The default is "messages". These are checked in the order presented here. -->
+		<property name="languageNamespaces">
+			<list>
+				<value>custom</value>
+				<value>messages</value>
+			</list>
+		</property>
+
     <!-- This property sets the maxinum lifetime of refresh tokens, in seconds. -->
 		<property name="maxRefreshTokenLifeTime" value="34128000" />
 

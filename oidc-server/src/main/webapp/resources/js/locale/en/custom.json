@@ -1,0 +1,66 @@
+{
+    "client": {
+        "client-form": {
+            "client-id-help": "Unique identifier. If you leave this blank it will be automatically generated.",
+            "token-exchange": "token exchange",
+            "timeout-bound-error": "Invalid timeout value",
+            "access-token-duration-error": "The duration of access token is out of range.",
+            "refresh-token-duration-error": "The duration of refresh token is out of range.",
+            "id-token-duration-error": "The duration of id token is out of range."
+        }
+    },
+    "common": {
+        "service": "Service",
+        "services": "Services"
+    },
+    "home": {
+        "title": "Home",
+        "welcome": {
+            "title": "Welcome",
+            "body": "OpenID Connect (OIDC) is an identity protocol built on top of the OAuth2 authorization framework. With OIDC SURFconext it is possible for Service Providers to join the SURFnet federation without having to implement the SAML2 protocol."
+        },
+        "more": "More"
+    },
+    "topbar": {
+        "login": "Sign in",
+        "logout": "Log out"
+    },
+    "sidebar": {
+        "personal": {
+	        "services": "Manage Services"
+        }
+    },
+    "openconext": {
+        "header": {
+            "lang_en": "EN",
+            "welcome": "Welcome"
+        },
+        "footer": {
+            "org": "SURFnet",
+            "org_link": "http://www.surfnet.nl/en",
+            "service": "Terms of Service",
+            "service_link": "https://wiki.surfnet.nl/display/conextsupport/Terms+of+Service+%28EN%29",
+            "mailto": "support@surfconext.nl",
+            "mailto_link": "mailto:support@surfconext.nl",
+            "git_link": "https://github.com/OpenConext/OpenConext-oidc"
+        }
+    },
+    "service": {
+        "manage": "Approved Services",
+        "service-table": {
+            "search": "Search...",
+            "no-service": "There are no services.",
+            "text": "These are the services with active access/refresh tokens that can be used to access your SSO profile information. Access tokens are usually short-lived and provide services with access to specific resources. Refresh tokens are usually long-lived and provide services with the ability to get new access tokens without your involvement.",
+            "no-matches": "There are no services that match your search criteria.",
+            "confirm-token": "Are you sure sure you would like to revoke this token?",
+            "confirm-service": "Are you sure sure you would like to revoke this service?",
+            "match": {
+                "description": "description",
+                "id": "id",
+                "logo": "logo",
+                "name": "name",
+                "scope": "scope"
+            }
+        }
+    }
+}

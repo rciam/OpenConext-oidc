@@ -36,7 +36,7 @@
             "client-description-help": "Human-readable text description",
             "client-description-placeholder": "Type a description",
             "client-id": "Client ID",
-            "client-id-help": "Unique identifier. If you leave this blank it will be automatically generated.",
+            "client-id-help": "Unique identifier. This must be linkable to the SP entity ID in SR. Replace each ':' in the SP entity ID with '@'",
             "client-id-placeholder": "Type something",
             "client-name": "Client name",
             "client-name-help": "Human-readable application name",
@@ -159,7 +159,6 @@
             "subject-type": "Subject Type",
             "terms": "Terms of Service",
             "terms-help": "URL for the Terms of Service of this client, will be displayed to the user",
-            "token-exchange" : "token exchange",
             "token-signing-algorithm": "Token Endpoint Authentication Signing Algorithm",
             "tokens": "Tokens",
             "type": "Application Type",
@@ -168,11 +167,7 @@
             "unknown": "(Unknown)",
             "user-info-crypto-algorithm": "User Info Endpoint Encryption Algorithm",
             "user-info-crypto-method": "User Info Endpoint Encryption Method",
-            "user-info-signing-algorithm": "User Info Endpoint Signing Algorithm",
-            "timeout-bound-error": "Invalid timeout value",
-            "access-token-duration-error": "The duration of access token is out of range.",
-            "refresh-token-duration-error": "The duration of refresh token is out of range.",
-            "id-token-duration-error": "The duration of id token is out of range."
+            "user-info-signing-algorithm": "User Info Endpoint Signing Algorithm"
         },
         "client-table": {
             "allow-introspection-tooltip": "This client can perform token introspection",
@@ -228,9 +223,7 @@
         "refresh": "Refresh",
         "save": "Save",
         "scopes": "Scopes",
-        "statistics": "Statistics",
-        "service": "Service",
-        "services": "Services"
+        "statistics": "Statistics"
     },
     "dynreg": {
         "client-id-placeholder": "Enter Client ID",
@@ -330,7 +323,7 @@
             "no-refresh": "There are no active refresh tokens.",
             "number-of-tokens": "Number of associated access tokens",
             "refresh-tokens": "Refresh Tokens",
-            "text": "Access tokens are usually short-lived and provide clients with access to specific resources.",
+            "text": "Access tokens are usually short-lived and provide clients with access to specific resources. ID Tokens are specialized access tokens to facilitate log on using OpenID Connect.",
             "text-refresh": "Refresh tokens are usually long-lived and provide clients with the ability to get new access tokens without end-user involvement.",
             "token-info": "Token Information"
         }
@@ -417,7 +410,6 @@
             "title": "Personal",
             "approved_sites": "Manage Approved Sites",
             "active_tokens": "Manage Active Tokens",
-	    "services": "Approved Services",
             "profile_information": "View Profile Information"
         },
         "developer": {
@@ -499,24 +491,5 @@
             "title": "Welcome",
             "body": "OpenID Connect (OIDC) is an identity protocol built on top of the OAuth2 authorization framework. With OIDC SURFconext it is possible for Service Providers to join the SURFnet federation without having to implement the SAML2 protocol."
         }
-    },
-    "service": {
-        "manage": "Approved Services",
-        "service-table": {
-            "search": "Search...",
-            "no-service": "There are no services.",
-            "text": "These are the services with active access/refresh tokens that can be used to access your SSO profile information. Access tokens are usually short-lived and provide services with access to specific resources. Refresh tokens are usually long-lived and provide services with the ability to get new access tokens without your involvement.",
-            "no-matches": "There are no services that match your search criteria.",
-            "confirm-token": "Are you sure sure you would like to revoke this token?",
-            "confirm-service": "Are you sure sure you would like to revoke this service?",
-            "match": {
-                "description": "description",
-                "id": "id",
-                "logo": "logo",
-                "name": "name",
-                "scope": "scope"
-            }
-        }
-     }
+    }
 }
-
