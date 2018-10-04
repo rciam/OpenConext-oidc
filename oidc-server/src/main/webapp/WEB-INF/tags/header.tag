@@ -24,13 +24,16 @@
     <link href="resources/css/mitreid-connect-responsive.css" rel="stylesheet">
     <link href="resources/css/mitreid-connect-responsive-local.css" rel="stylesheet">
 
+    <!-- SURFconext override stylesheet -->
+    <link href="resources/css/oidc-base.css" rel="stylesheet">
+
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="resources/js/lib/html5.js"></script>
     <![endif]-->
 
     <!-- favico -->
-    <link rel="shortcut icon" href="resources/images/mitreid-connect.ico">
+    <link rel="shortcut icon" href="resources/images/favico.ico">
 
     <!-- Load jQuery up here so that we can use in-page functions -->
     <script type="text/javascript" src="resources/js/lib/jquery.js"></script>
@@ -39,7 +42,7 @@
     <script type="text/javascript">
         $.i18n.init({
             fallbackLng: "en",
-            lng: "${config.locale}",
+            lng: "${pageContext.response.locale == null ? "en" : pageContext.response.locale}",
             resGetPath: "resources/js/locale/__lng__/__ns__.json",
             ns: {
             	namespaces: ${config.languageNamespacesString},

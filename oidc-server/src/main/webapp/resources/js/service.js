@@ -189,7 +189,7 @@ var ServiceView = Backbone.View.extend({
 				$(this).slideUp("fast", function() { // slide up
 					$(this).remove(); // then remove from the DOM
 					_self.parentView.togglePlaceholder();
-					_self.parentView.refreshTable();
+					// _self.parentView.refreshTable();
 				});
 			});
 
@@ -329,7 +329,7 @@ var ServiceRefreshTokenView = Backbone.View.extend({
 							$(this).remove(); // then remove from the DOM
 							// refresh the table in case the access tokens have
 							// changed, too
-							_self.parentView.refreshTable();
+							// _self.parentView.refreshTable();
 						});
 					});
 				}
@@ -514,7 +514,7 @@ var ServiceAccessTokenView = Backbone.View.extend({
 							$('#service-table #refresh-token-table-' + clId + ' #access-token-container-' + refId, _self.el).hide();
 							// refresh the table in case we removed an id token,
 							// too
-							_self.parentView.refreshTable();
+							// _self.parentView.refreshTable();
 						});
 					});
 				}

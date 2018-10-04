@@ -356,29 +356,13 @@ var AppRouter = Backbone.Router.extend({
         "admin/clients":"listClients",
         "admin/client/new":"newClient",
         "admin/client/:id":"editClient",
-
-        "admin/whitelists":"whiteList",
-        "admin/whitelist/new/:cid":"newWhitelist",
-        "admin/whitelist/:id":"editWhitelist",
-        
-        "admin/blacklist":"blackList",
         
         "admin/scope":"siteScope",
         "admin/scope/new":"newScope",
         "admin/scope/:id":"editScope",
         
-        "user/approved":"approvedSites",
-        "user/tokens":"tokens",
-	"user/services":"services",
+		"user/services":"services",
         "user/profile":"profile",
-        
-        "dev/dynreg":"dynReg",
-        "dev/dynreg/new":"newDynReg",
-        "dev/dynreg/edit":"editDynReg",
-        
-        "dev/resource":"resReg",
-        "dev/resource/new":"newResReg",
-        "dev/resource/edit":"editResReg",
         
         "": "root"
         	
@@ -388,23 +372,18 @@ var AppRouter = Backbone.Router.extend({
     	if (isAdmin()) {
     		this.navigate('admin/clients', {trigger: true});
     	} else {
-    		this.navigate('user/approved', {trigger: true});
+    		this.navigate('user/profile', {trigger: true});
     	}
     },
     
     initialize:function () {
 
         this.clientList = new ClientCollection();
-        this.whiteListList = new WhiteListCollection();
-        this.blackListList = new BlackListCollection();
-        this.approvedSiteList = new ApprovedSiteCollection();
         this.systemScopeList = new SystemScopeCollection();
         this.clientStats = new StatsModel(); 
-        this.accessTokensList = new AccessTokenCollection();
-        this.refreshTokensList = new RefreshTokenCollection();
-	this.serviceList = new ServiceCollection();
-	this.serviceRefreshTokensList = new ServiceRefreshTokenCollection();
-	this.serviceAccessTokensList = new ServiceAccessTokenCollection();
+		this.serviceList = new ServiceCollection();
+		this.serviceRefreshTokensList = new ServiceRefreshTokenCollection();
+		this.serviceAccessTokensList = new ServiceAccessTokenCollection();
                 
         this.breadCrumbView = new BreadCrumbView({
             collection:new Backbone.Collection()
@@ -472,43 +451,22 @@ var AppRouter = Backbone.Router.extend({
     			contacts.push(userInfo.email);
     		}
     		
-    		// use a different set of defaults based on heart mode flag
-    		if (heartMode) {
-            	client.set({
-            		tokenEndpointAuthMethod: "PRIVATE_KEY",
-            		generateClientSecret:false,
-            		displayClientSecret:false,
-            		requireAuthTime:true,
-            		defaultMaxAge:60000,
-            		scope: _.uniq(_.flatten(app.systemScopeList.defaultScopes().pluck("value"))),
-            		accessTokenValiditySeconds:3600,
-            		refreshTokenValiditySeconds:24*3600,
-            		idTokenValiditySeconds:300,
-            		grantTypes: ["authorization_code"],
-            		responseTypes: ["code"],
-            		subjectType: "PUBLIC",
-            		jwksType: "URI",
-            		contacts: contacts
-            	}, { silent: true });
-    		} else {
-    			// set up this new client to require a secret and have us autogenerate one
-            	client.set({
-            		tokenEndpointAuthMethod: "SECRET_BASIC",
-            		generateClientSecret:true,
-            		displayClientSecret:false,
-            		requireAuthTime:true,
-            		defaultMaxAge:60000,
-            		scope: _.uniq(_.flatten(app.systemScopeList.defaultScopes().pluck("value"))),
-            		accessTokenValiditySeconds:3600,
-            		idTokenValiditySeconds:600,
-            		grantTypes: ["authorization_code"],
-            		responseTypes: ["code"],
-            		subjectType: "PUBLIC",
-            		jwksType: "URI",
-            		contacts: contacts
-            	}, { silent: true });
-    		}
-        	
+			client.set({
+				tokenEndpointAuthMethod: "SECRET_BASIC",
+				generateClientSecret:true,
+				displayClientSecret:false,
+				requireAuthTime:true,
+				defaultMaxAge:60000,
+				scope: _.uniq(_.flatten(app.systemScopeList.defaultScopes().pluck("value"))),
+				refreshTokenValiditySeconds:getDefaultRefreshTokenLifeTime(),
+				accessTokenValiditySeconds:getDefaultAccessTokenLifeTime(),
+				idTokenValiditySeconds:getDefaultIdTokenLifeTime(),
+				grantTypes: ["authorization_code"],
+				responseTypes: ["code"],
+				subjectType: "PUBLIC",
+				jwksType: "URI",
+				contacts: contacts
+			}, { silent: true });
         	
         	$('#content').html(view.render().el);
         	setPageTitle($.t('client.client-form.new'));
@@ -565,170 +523,31 @@ var AppRouter = Backbone.Router.extend({
 
     },
 
-    whiteList:function () {
+	services: function () {
+		this.breadCrumbView.collection.reset();
+		this.breadCrumbView.collection.add([
+			{ text: $.t('admin.home'), href: "" },
+			{ text: $.t('service.manage'), href: "manage/#user/services" }
+		])        
 
-    	if (!isAdmin()) {
-    		this.root();
-    		return;
-    	}
+		this.updateSidebar('user/services');
 
-        this.updateSidebar('admin/whitelists');
-
-        this.breadCrumbView.collection.reset();
-        this.breadCrumbView.collection.add([
-            {text:$.t('admin.home'), href:""},
-            {text:$.t('whitelist.manage'), href:"manage/#admin/whitelists"}
-        ]);
-        
-        var view = new WhiteListListView({model:this.whiteListList, clientList: this.clientList, systemScopeList: this.systemScopeList});
-        
-        view.load(
-        	function() {
-        		$('#content').html(view.render().el);
-        		view.delegateEvents();
-        		setPageTitle($.t('whitelist.manage'));
-        	}
-        );
-        
-
-    },
-    
-    newWhitelist:function(cid) {
-
-    	if (!isAdmin()) {
-    		this.root();
-    		return;
-    	}
-
-    	this.breadCrumbView.collection.reset();
-        this.breadCrumbView.collection.add([
-            {text:$.t('admin.home'), href:""},
-            {text:$.t('whitelist.manage'), href:"manage/#admin/whitelists"},
-            {text:$.t('whitelist.new'), href:"manage/#admin/whitelist/new/" + cid}
-        ]);
-
-        this.updateSidebar('admin/whitelists');
-        
-        var whiteList = new WhiteListModel();
-
-        var client = this.clientList.get(cid);
-        if (!client) {
-        	client = new ClientModel({id: cid});
-        }
-        
-        var view = new WhiteListFormView({model: whiteList, client: client, systemScopeList: this.systemScopeList});
-      
-        view.load(
-        	function() {
-        		
-        		// set the scopes on the model now that everything's loaded
-        		whiteList.set({allowedScopes: client.get('scope')}, {silent: true});
-        		
-        		$('#content').html(view.render().el);
-        		view.delegateEvents();
-        		setPageTitle($.t('whitelist.manage'));
-        	}
-        );        
-    	
-    },
-    
-    editWhitelist:function(id) {
-
-    	if (!isAdmin()) {
-    		this.root();
-    		return;
-    	}
-
-    	this.breadCrumbView.collection.reset();
-        this.breadCrumbView.collection.add([
-            {text:$.t('admin.home'), href:""},
-            {text:$.t('whitelist.manage'), href:"manage/#admin/whitelists"},
-            {text:$.t('whitelist.edit'), href:"manage/#admin/whitelist/" + id}
-        ]);
-        
-        this.updateSidebar('admin/whitelists');
-
-        var whiteList = this.whiteListList.get(id);
-        if (!whiteList) {
-        	whiteList = new WhiteListModel({id: id});
-        }
-        
-        var view = new WhiteListFormView({model: whiteList, clientList: this.clientList, systemScopeList: this.systemScopeList});
-      
-        view.load(
-        	function() {
-        		$('#content').html(view.render().el);
-        		view.delegateEvents();
-        		setPageTitle($.t('whitelist.manage'));
-        	}
-        );
-
-    },
-    
-    approvedSites:function() {
-    	this.breadCrumbView.collection.reset();
-        this.breadCrumbView.collection.add([
-            {text:$.t('admin.home'), href:""},
-            {text:$.t('grant.manage-approved-sites'), href:"manage/#user/approve"}
-        ]);
-
-        this.updateSidebar('user/approved');
-
-        var view = new ApprovedSiteListView({model:this.approvedSiteList, clientList: this.clientList, systemScopeList: this.systemScopeList});
-    	view.load( 
-    		function(collection, response, options) {
-    			$('#content').html(view.render().el);
-    	    	setPageTitle($.t('grant.manage-approved-sites'));
-    		}
-    	);
-    	
-    },
-
-    tokens:function() {
-    	this.breadCrumbView.collection.reset();
-        this.breadCrumbView.collection.add([
-            {text:$.t('admin.home'), href:""},
-            {text:$.t('token.manage'), href:"manage/#user/tokens"}
-        ]);
-        
-        this.updateSidebar('user/tokens');
-
-        var view = new TokenListView({model: {access: this.accessTokensList, refresh: this.refreshTokensList}, clientList: this.clientList, systemScopeList: this.systemScopeList});
-        
-        view.load(
-    		function(collection, response, options) {
+		var view = new ServiceListView({
+			model: {
+				serviceClient: this.serviceList,
+				serviceRefreshT: this.serviceRefreshTokensList,
+				serviceAccessT: this.serviceAccessTokensList
+			},
+			systemScopeList: this.systemScopeList
+		});
+		view.load(
+			function (collection, response, options) {
 				$('#content').html(view.render().el);
-    	    	setPageTitle($.t('token.manage'));
-    		}
-        );
-        
-    },
+				setPageTitle($.t('service.manage'));
+			}
+		);
 
-    services:function() {
-    	this.breadCrumbView.collection.reset();
-        this.breadCrumbView.collection.add([
-            {text:$.t('admin.home'), href:""},
-            {text:$.t('token.manage'), href:"manage/#user/services"}
-        ]);
-        
-        this.updateSidebar('user/services');
-
-        var view = new ServiceListView({
-		model: {
-			serviceClient: this.serviceList,
-			serviceRefreshT: this.serviceRefreshTokensList,
-			serviceAccessT: this.serviceAccessTokensList
-		},
-		systemScopeList: this.systemScopeList
-	});        
-        view.load(
-    		function(collection, response, options) {
-				$('#content').html(view.render().el);
-    	    	setPageTitle($.t('service.manage'));
-    		}
-        );
-        
-    },
+	},
     
     notImplemented:function(){
         this.breadCrumbView.collection.reset();
@@ -739,31 +558,6 @@ var AppRouter = Backbone.Router.extend({
         this.updateSidebar('none');
         
    		$('#content').html("<h2>Not implemented yet.</h2>");
-    },
-    
-    blackList:function() {
-
-    	if (!isAdmin()) {
-    		this.root();
-    		return;
-    	}
-
-    	this.breadCrumbView.collection.reset();
-        this.breadCrumbView.collection.add([
-            {text:$.t('admin.home'), href:""},
-            {text:$.t('admin.manage-blacklist'), href:"manage/#admin/blacklist"}
-        ]);
-        
-        this.updateSidebar('admin/blacklist');
-        
-        var view = new BlackListListView({collection: this.blackListList});
-        
-        view.load(
-        	function(collection, response, options) {
-        		$('#content').html(view.render().el);
-            	setPageTitle($.t('admin.manage-blacklist'));
-        	}
-        );
     },
     
     siteScope:function() {
@@ -846,159 +640,6 @@ var AppRouter = Backbone.Router.extend({
     	
     },
     
-    dynReg:function() {
-    	this.breadCrumbView.collection.reset();
-    	this.breadCrumbView.collection.add([
-             {text:$.t('admin.home'), href:""},
-             {text:$.t('admin.self-service-client'), href:"manage/#dev/dynreg"}
-        ]);
-    	
-    	var view = new DynRegRootView({systemScopeList: this.systemScopeList});
-    	
-        this.updateSidebar('dev/dynreg');
-        
-    	view.load(function() {
-    			$('#content').html(view.render().el);
-    			
-    			setPageTitle($.t('admin.self-service-client'));
-    	});
-    	
-    },
-    
-    newDynReg:function() {
-    	this.breadCrumbView.collection.reset();
-    	this.breadCrumbView.collection.add([
-             {text:$.t('admin.home'), href:""},
-             {text:$.t('admin.self-service-client'), href:"manage/#dev/dynreg"},
-             {text:$.t('dynreg.new-client'), href:"manage/#dev/dynreg/new"}
-        ]);
-    	
-        this.updateSidebar('dev/dynreg');
-        
-    	var client = new DynRegClient();
-    	var view = new DynRegEditView({model: client, systemScopeList:this.systemScopeList});
-    	
-    	view.load(function() {
-
-    		var userInfo = getUserInfo();
-    		var contacts = [];
-    		if (userInfo != null && userInfo.email != null) {
-    			contacts.push(userInfo.email);
-    		}
-    		
-    		if (heartMode) {
-    			client.set({
-    				require_auth_time:true,
-    				default_max_age:60000,
-    				scope: _.uniq(_.flatten(app.systemScopeList.defaultUnrestrictedScopes().pluck("value"))).join(" "),
-    				token_endpoint_auth_method: 'private_key_jwt',
-    				grant_types: ["authorization_code"],
-    				response_types: ["code"],
-    				subject_type: "public",
-    				contacts: contacts
-    			}, { silent: true });
-    		} else {
-    			client.set({
-    				require_auth_time:true,
-    				default_max_age:60000,
-    				scope: _.uniq(_.flatten(app.systemScopeList.defaultUnrestrictedScopes().pluck("value"))).join(" "),
-    				token_endpoint_auth_method: 'client_secret_basic',
-    				grant_types: ["authorization_code"],
-    				response_types: ["code"],
-    				subject_type: "public",
-    				contacts: contacts
-    			}, { silent: true });
-    		}
-    		
-    		$('#content').html(view.render().el);
-    		view.delegateEvents();
-    		setPageTitle($.t('dynreg.new-client'));
-    		
-    	});
-    	
-    },
-    
-    editDynReg:function() {
-    	this.breadCrumbView.collection.reset();
-    	this.breadCrumbView.collection.add([
-             {text:$.t('admin.home'), href:""},
-             {text:$.t('admin.self-service-client'), href:"manage/#dev/dynreg"},
-             {text:$.t('dynreg.edit-existing'), href:"manage/#dev/dynreg/edit"}
-        ]);
-    	
-        this.updateSidebar('dev/dynreg');
-        
-    	setPageTitle($.t('dynreg.edit-existing'));
-    	// note that this doesn't actually load the client, that's supposed to happen elsewhere...
-    },
-    
-    resReg:function() {
-    	this.breadCrumbView.collection.reset();
-    	this.breadCrumbView.collection.add([
-             {text:$.t('admin.home'), href:""},
-             {text:$.t('admin.self-service-resource'), href:"manage/#dev/resource"}
-        ]);
-    	
-        this.updateSidebar('dev/resource');
-        
-    	var view = new ResRegRootView({systemScopeList: this.systemScopeList});
-    	view.load(function() {
-    			$('#content').html(view.render().el);
-    			
-    			setPageTitle($.t('admin.self-service-resource'));
-    	});
-    	
-    },
-    
-    newResReg:function() {
-    	this.breadCrumbView.collection.reset();
-    	this.breadCrumbView.collection.add([
-             {text:$.t('admin.home'), href:""},
-             {text:$.t('admin.self-service-resource'), href:"manage/#dev/resource"},
-             {text:$.t('rsreg.new'), href:"manage/#dev/resource/new"}
-        ]);
-    	
-        this.updateSidebar('dev/resource');
-        
-    	var client = new ResRegClient();
-    	var view = new ResRegEditView({model: client, systemScopeList:this.systemScopeList});
-    	
-    	view.load(function() {
-
-    		var userInfo = getUserInfo();
-    		var contacts = [];
-    		if (userInfo != null && userInfo.email != null) {
-    			contacts.push(userInfo.email);
-    		}
-    		
-    		client.set({
-        		scope: _.uniq(_.flatten(app.systemScopeList.defaultUnrestrictedScopes().pluck("value"))).join(" "),
-        		token_endpoint_auth_method: 'client_secret_basic',
-        		contacts: contacts
-        	}, { silent: true });
-    	
-    		$('#content').html(view.render().el);
-    		view.delegateEvents();
-    		setPageTitle($.t('rsreg.new'));
-    		
-    	});
-    	
-    },
-    
-    editResReg:function() {
-    	this.breadCrumbView.collection.reset();
-    	this.breadCrumbView.collection.add([
-             {text:$.t('admin.home'), href:""},
-             {text:$.t('admin.self-service-resource'), href:"manage/#dev/resource"},
-             {text:$.t('rsreg.edit'), href:"manage/#dev/resource/edit"}
-        ]);
-    	
-        this.updateSidebar('dev/resource');
-        
-    	setPageTitle($.t('rsreg.edit'));
-    	// note that this doesn't actually load the client, that's supposed to happen elsewhere...
-    },
-    
     profile:function() {
     	this.breadCrumbView.collection.reset();
     	this.breadCrumbView.collection.add([
@@ -1037,14 +678,8 @@ $(function () {
     $.when(
     		$.get('resources/template/admin.html', _load),
     		$.get('resources/template/client.html', _load),
-    		$.get('resources/template/grant.html', _load),
     		$.get('resources/template/scope.html', _load),
-    		$.get('resources/template/whitelist.html', _load),
-    		$.get('resources/template/dynreg.html', _load),
-    		$.get('resources/template/rsreg.html', _load),
-    		$.get('resources/template/token.html', _load),
-    		$.get('resources/template/blacklist.html', _load),
-		$.get('resources/template/service.html', _load)
+			$.get('resources/template/service.html', _load)
     		).done(function() {
     		    $.ajaxSetup({cache:false});
     		    app = new AppRouter();
