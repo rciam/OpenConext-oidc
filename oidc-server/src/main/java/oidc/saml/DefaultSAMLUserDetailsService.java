@@ -167,7 +167,12 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
     userInfo.setEduPersonPrincipalName(flatten(properties.getOrDefault("urn:oid:1.3.6.1.4.1.5923.1.1.1.6",
     		properties.get("urn:mace:dir:attribute-def:eduPersonPrincipalName"))));
     userInfo.setEduPersonTargetedId(flatten(properties.getOrDefault("urn:oid:1.3.6.1.4.1.5923.1.1.1.10",
-    		properties.get("urn:mace:dir:attribute-def:eduPersonTargetedID"))));
+        properties.get("urn:mace:dir:attribute-def:eduPersonTargetedID"))));
+    // New claims' titles
+    userInfo.setEduPersonAssurance(set(properties.getOrDefault(EDU_PERSON_ASSURANCE_ID_OID,
+        properties.get(EDU_PERSON_ASSURANCE_ID_URN))));
+    userInfo.setPreferredUsername(flatten(properties.getOrDefault("urn:oid:0.9.2342.19200300.100.1.1",
+        properties.get("urn:mace:dir:attribute-def:uid"))));
 
     return userInfo;
   }

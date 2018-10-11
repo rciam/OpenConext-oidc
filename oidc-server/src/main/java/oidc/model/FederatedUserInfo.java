@@ -30,6 +30,9 @@ public class FederatedUserInfo extends DefaultUserInfo {
 
   private Set<String> eduPersonScopedAffiliations = new HashSet<>();
   private Set<String> eduPersonEntitlements = new HashSet<>();
+  // new claims' titles
+  private Set<String> eduPersonAssurance = new HashSet<>();
+  private String preferredUsername;
 
   @Basic
   @Column(name = "unspecified_name_id")
@@ -139,6 +142,32 @@ public class FederatedUserInfo extends DefaultUserInfo {
     this.eduPersonEntitlements = eduPersonEntitlements;
   }
 
+  // New claims' titles
+
+  @ElementCollection(fetch = FetchType.EAGER)
+  @CollectionTable(
+      name = "user_eduperson_assurance",
+      joinColumns = @JoinColumn(name = "user_id")
+  )
+  @Column(name = "eduperson_assurance")
+  public Set<String> getEduPersonAssurance() {
+    return eduPersonAssurance;
+  }
+
+  public void setEduPersonAssurance(Set<String> eduPersonAssurance) {
+    this.eduPersonAssurance = eduPersonAssurance;
+  }
+
+  @Basic
+  @Column(name = "preferred_username")
+  public String getPreferredUsername() {
+    return this.preferredUsername;
+  }
+
+  public void setPreferredUsername(String preferredUsername) {
+    this.preferredUsername = preferredUsername;
+  }
+
   @Override
   public JsonObject toJson() {
     JsonObject obj = super.toJson();
@@ -150,6 +179,11 @@ public class FederatedUserInfo extends DefaultUserInfo {
     addListProperty(obj, this.eduPersonScopedAffiliations, "edu_person_scoped_affiliations");
     addListProperty(obj, this.eduPersonEntitlements, "eduperson_entitlement");
     addListProperty(obj, this.eduPersonEntitlements, "edu_person_entitlements");
+    // New claims' titles
+    addListProperty(obj, this.eduPersonAssurance, "eduperson_assurance");
+    addProperty(obj, this.eduPersonUniqueId, "eduperson_unique_id");
+    addListProperty(obj, this.eduPersonScopedAffiliations, "eduperson_scoped_affiliation");
+    addProperty(obj, this.preferredUsername, "preferred_username");
     return obj;
   }
 
@@ -178,8 +212,13 @@ public class FederatedUserInfo extends DefaultUserInfo {
         ", eduPersonUniqueId='" + eduPersonUniqueId + '\'' +
         ", eduPersonPrincipalName='" + eduPersonPrincipalName + '\'' +
         ", eduPersonTargetedId='" + eduPersonTargetedId + '\'' +
-        ", eduPersonScopedAffiliations=" + eduPersonScopedAffiliations +
-        ", eduPersonEntitlements=" + eduPersonEntitlements +
+        ", eduPersonScopedAffiliations=" + eduPersonScopedAffiliations + '\'' +
+        ", eduPersonEntitlements=" + eduPersonEntitlements + '\'' +
+        ", newEduPersonEntitlement=" + eduPersonEntitlements + '\'' +
+        ", eduPersonScopedAffiliation=" + eduPersonScopedAffiliations + '\'' +
+        ", eduPersonUniqueId='" + eduPersonUniqueId + '\'' +
+        ", eduPersonAssurance='" + eduPersonAssurance + '\'' +
+        ", preferredUsername='" + preferredUsername + '\'' +
         '}';
   }
 

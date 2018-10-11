@@ -55,6 +55,11 @@ public class FederationScopeClaimTranslationService implements ScopeClaimTransla
         claims.add("uids");
         claims.add("edu_person_targeted_id");
         claims.add("edu_person_unique_id");
+        
+        claims.add("eduperson_assurance");
+        claims.add("eduperson_entitlement");
+        claims.add("eduperson_scoped_affiliation");
+        claims.add("eduperson_unique_id");
 
     }
 
