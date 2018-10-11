@@ -7,74 +7,80 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.SetMultimap;
+
 @Primary
 @Service("federationScopeClaimTranslationService")
 public class FederationScopeClaimTranslationService implements ScopeClaimTranslationService {
 
-    private final Set<String> claims = new HashSet<>();
-    private final Set<String> noClaims = new HashSet<>();
+  private SetMultimap<String, String> scopesToClaims = HashMultimap.create();
 
-  public FederationScopeClaimTranslationService() {
-        claims.add("sub");
-        claims.add("acr");
+	/**
+	 * Default constructor; initializes scopesToClaims map
+	 */
+	public FederationScopeClaimTranslationService() {
+		scopesToClaims.put("openid", "sub");
 
-        claims.add("name");
-        claims.add("preferred_username");
-        claims.add("given_name");
-        claims.add("family_name");
-        claims.add("middle_name");
-        claims.add("nickname");
-        claims.add("profile");
-        claims.add("picture");
-        claims.add("website");
-        claims.add("gender");
-        claims.add("zoneinfo");
-        claims.add("locale");
-        claims.add("updated_at");
-        claims.add("birthdate");
+		scopesToClaims.put("profile", "name");
+		scopesToClaims.put("profile", "preferred_username");
+		scopesToClaims.put("profile", "given_name");
+		scopesToClaims.put("profile", "family_name");
+		scopesToClaims.put("profile", "middle_name");
+		scopesToClaims.put("profile", "nickname");
+		scopesToClaims.put("profile", "profile");
+		scopesToClaims.put("profile", "picture");
+		scopesToClaims.put("profile", "website");
+		scopesToClaims.put("profile", "gender");
+		scopesToClaims.put("profile", "zoneinfo");
+		scopesToClaims.put("profile", "locale");
+		scopesToClaims.put("profile", "updated_at");
+		scopesToClaims.put("profile", "birthdate");
 
-        claims.add("email");
-        claims.add("email_verified");
+		scopesToClaims.put("email", "email");
+		scopesToClaims.put("email", "email_verified");
 
-        claims.add("phone_number");
-        claims.add("phone_number_verified");
+		scopesToClaims.put("phone", "phone_number");
+		scopesToClaims.put("phone", "phone_number_verified");
 
-        claims.add("address");
+		scopesToClaims.put("address", "address");
+		
+		scopesToClaims.put("refeds_edu", "name");
+		scopesToClaims.put("refeds_edu", "given_name");
+		scopesToClaims.put("refeds_edu", "family_name");
+		scopesToClaims.put("refeds_edu", "email");
+		scopesToClaims.put("refeds_edu", "sub");
+		scopesToClaims.put("refeds_edu", "eduperson_unique_id");
+		scopesToClaims.put("refeds_edu", "acr");
+		scopesToClaims.put("refeds_edu", "eduperson_assurance");
+		scopesToClaims.put("refeds_edu", "edu_person_scoped_affiliations");
+		scopesToClaims.put("refeds_edu", "eduperson_scoped_affiliation");
+		scopesToClaims.put("refeds_edu", "edu_person_entitlements");
+		scopesToClaims.put("refeds_edu", "eduperson_entitlement");
+	}
 
-        claims.add("schac_home_organization");
-        claims.add("schac_home_organization_type");
-        claims.add("edu_person_scoped_affiliations");
-        claims.add("edumember_is_member_of");
+	/* (non-Javadoc)
+	 * @see org.mitre.openid.connect.service.ScopeClaimTranslationService#getClaimsForScope(java.lang.String)
+	 */
+	@Override
+	public Set<String> getClaimsForScope(String scope) {
+		if (scopesToClaims.containsKey(scope)) {
+			return scopesToClaims.get(scope);
+		} else {
+			return new HashSet<>();
+		}
+	}
 
-        claims.add("edu_person_affiliations");
-        claims.add("edu_person_entitlements");
-        claims.add("eduperson_entitlement");
-
-        claims.add("schac_personal_unique_codes");
-        claims.add("edu_person_principal_name");
-        claims.add("uids");
-        claims.add("edu_person_targeted_id");
-        claims.add("edu_person_unique_id");
-        
-        claims.add("eduperson_assurance");
-        claims.add("eduperson_entitlement");
-        claims.add("eduperson_scoped_affiliation");
-        claims.add("eduperson_unique_id");
-
-    }
-
-    @Override
-    public Set<String> getClaimsForScope(String scope) {
-        return "openid".equals(scope) ? claims : noClaims;
-    }
-
-    @Override
-    public Set<String> getClaimsForScopeSet(Set<String> scopes) {
-        return scopes.contains("openid") ? claims : noClaims;
-    }
-
-    protected Set<String> allClaims() {
-        return claims;
+	/* (non-Javadoc)
+	 * @see org.mitre.openid.connect.service.ScopeClaimTranslationService#getClaimsForScopeSet(java.util.Set)
+	 */
+	@Override
+	public Set<String> getClaimsForScopeSet(Set<String> scopes) {
+		Set<String> result = new HashSet<>();
+		for (String scope : scopes) {
+			result.addAll(getClaimsForScope(scope));
+		}
+		return result;
     }
 
 }
