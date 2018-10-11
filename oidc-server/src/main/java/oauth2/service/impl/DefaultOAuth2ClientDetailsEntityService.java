@@ -319,6 +319,10 @@ public class DefaultOAuth2ClientDetailsEntityService implements ClientDetailsEnt
 				throw new IllegalArgumentException("[HEART mode] Password grant type is forbidden");
 			}
 
+			if (client.getGrantTypes().contains("urn:ietf:params:oauth:grant-type:token-exchange")) {
+				throw new IllegalArgumentException("[HEART mode] Token-echange grant type is forbidden");
+			}
+
 			// make sure we don't have a client secret
 			if (!Strings.isNullOrEmpty(client.getClientSecret())) {
 				throw new IllegalArgumentException("[HEART mode] Client secrets are not allowed");
