@@ -142,6 +142,7 @@
     "RSA1_5"
   ],
   "jwks_uri": "@configuration_end_point@jwk",
+  "registration_endpoint": "@configuration_end_point@register",
   "subject_types_supported": [
     "pairwise"
   ],
