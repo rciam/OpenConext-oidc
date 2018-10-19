@@ -1,4 +1,4 @@
-package oauth2.service.impl;
+package org.mitre.oauth2.service.impl;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -21,7 +21,7 @@ import org.mitre.oauth2.repository.OAuth2ClientRepository;
 import org.mitre.oauth2.repository.OAuth2TokenRepository;
 import org.mitre.oauth2.service.ClientDetailsEntityService;
 import org.mitre.oauth2.service.SystemScopeService;
-import oidc.config.CustomConfigurationPropertiesBean;
+import org.mitre.openid.connect.config.ConfigurationPropertiesBean;
 import org.mitre.openid.connect.model.WhitelistedSite;
 import org.mitre.openid.connect.service.ApprovedSiteService;
 import org.mitre.openid.connect.service.BlacklistedSiteService;
@@ -39,7 +39,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.context.annotation.Primary;
 
 import com.google.common.base.Strings;
 import com.google.common.cache.CacheBuilder;
@@ -49,7 +48,6 @@ import com.google.common.util.concurrent.UncheckedExecutionException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-@Primary
 @Service
 public class DefaultOAuth2ClientDetailsEntityService implements ClientDetailsEntityService {
 
@@ -83,7 +81,7 @@ public class DefaultOAuth2ClientDetailsEntityService implements ClientDetailsEnt
 	private ResourceSetService resourceSetService;
 
 	@Autowired
-	private CustomConfigurationPropertiesBean config;
+	private ConfigurationPropertiesBean config;
 
 	// map of sector URI -> list of redirect URIs
 	private LoadingCache<String, List<String>> sectorRedirects = CacheBuilder.newBuilder()
@@ -113,9 +111,6 @@ public class DefaultOAuth2ClientDetailsEntityService implements ClientDetailsEnt
 
 		// make sure that clients with the "refresh_token" grant type have the "offline_access" scope, and vice versa
 		ensureRefreshTokenConsistency(client);
-		
-		// make sure that refresh tokens expire
-		ensureMaxRefreshTokenLifeTime(client);
 		
 		// make sure that access tokens expire
 		ensureMaxAccessTokenLifeTime(client);
@@ -201,6 +196,8 @@ public class DefaultOAuth2ClientDetailsEntityService implements ClientDetailsEnt
 				|| client.getScope().contains(SystemScopeService.OFFLINE_ACCESS)) {
 			client.getScope().add(SystemScopeService.OFFLINE_ACCESS);
 			client.getAuthorizedGrantTypes().add("refresh_token");
+			// make sure that refresh tokens expire
+			ensureMaxRefreshTokenLifeTime(client);
 		}
 	}
 	
@@ -211,7 +208,7 @@ public class DefaultOAuth2ClientDetailsEntityService implements ClientDetailsEnt
 	private void ensureMaxRefreshTokenLifeTime(ClientDetailsEntity client) {
 		try {
 			//Check if the life time is valid value
-			if (!(client.getRefreshTokenValiditySeconds() > 0 && client.getRefreshTokenValiditySeconds() <= config.getMaxRefreshTokenLifeTime())) {
+			if (client.getRefreshTokenValiditySeconds() == null || client.getRefreshTokenValiditySeconds() <= 0 || client.getRefreshTokenValiditySeconds() > config.getMaxRefreshTokenLifeTime()) {
 				client.setRefreshTokenValiditySeconds(config.getDefaultRefreshTokenLifeTime());
 			}
 
@@ -456,9 +453,6 @@ public class DefaultOAuth2ClientDetailsEntityService implements ClientDetailsEnt
 
 			// if the client is flagged to allow for refresh tokens, make sure it's got the right scope
 			ensureRefreshTokenConsistency(newClient);
-			
-			// make sure that refresh tokens expire
-			ensureMaxRefreshTokenLifeTime(newClient);
 			
 			// make sure that access tokens expire
 			ensureMaxAccessTokenLifeTime(newClient);

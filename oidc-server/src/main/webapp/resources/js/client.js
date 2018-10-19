@@ -613,16 +613,16 @@ var ClientFormView = Backbone.View.extend({
     events:{
         "click .btn-save":"saveClient",
         "click #allowRefresh" : "toggleRefreshTokenTimeout",
-        "click #disableAccessTokenTimeout" : function() { 
-        	$("#access-token-timeout-time", this.$el).prop('disabled',!$("#access-token-timeout-time", this.$el).prop('disabled')); 
-        	$("#access-token-timeout-unit", this.$el).prop('disabled',!$("#access-token-timeout-unit", this.$el).prop('disabled')); 
-        	document.getElementById("access-token-timeout-time").value = '';
-        	},
-        "click #disableRefreshTokenTimeout" : function() { 
-        	$("#refresh-token-timeout-time", this.$el).prop('disabled',!$("#refresh-token-timeout-time", this.$el).prop('disabled'));
-        	$("#refresh-token-timeout-unit", this.$el).prop('disabled',!$("#refresh-token-timeout-unit", this.$el).prop('disabled')); 
-        	document.getElementById("refresh-token-timeout-time").value = ''; 	
-        	},
+        // "click #disableAccessTokenTimeout" : function() { 
+        // 	$("#access-token-timeout-time", this.$el).prop('disabled',!$("#access-token-timeout-time", this.$el).prop('disabled')); 
+        // 	$("#access-token-timeout-unit", this.$el).prop('disabled',!$("#access-token-timeout-unit", this.$el).prop('disabled')); 
+        // 	document.getElementById("access-token-timeout-time").value = '';
+        // 	},
+        // "click #disableRefreshTokenTimeout" : function() { 
+        // 	$("#refresh-token-timeout-time", this.$el).prop('disabled',!$("#refresh-token-timeout-time", this.$el).prop('disabled'));
+        // 	$("#refresh-token-timeout-unit", this.$el).prop('disabled',!$("#refresh-token-timeout-unit", this.$el).prop('disabled')); 
+        // 	document.getElementById("refresh-token-timeout-time").value = ''; 	
+        // 	},
         "click .btn-cancel":"cancel",
         "change #tokenEndpointAuthMethod input:radio":"toggleClientCredentials",
         "change #displayClientSecret":"toggleDisplayClientSecret",
@@ -658,7 +658,7 @@ var ClientFormView = Backbone.View.extend({
 	},
     	
     toggleRefreshTokenTimeout:function () {
-        $("#refreshTokenValidityTime", this.$el).toggle();
+		$("#refreshTokenValidityTime", this.$el).toggle();
     },
     
     previewLogo:function() {
@@ -872,9 +872,9 @@ var ClientFormView = Backbone.View.extend({
         }
         
         var accessTokenValiditySeconds = null;
-        if (!$('disableAccessTokenTimeout').is(':checked')) {
-        	accessTokenValiditySeconds = this.getFormTokenNumberValue($('#accessTokenValidityTime input[type=text]').val(), $('#accessTokenValidityTime select').val()); 
-        }
+        // if (!$('disableAccessTokenTimeout').is(':checked')) {
+		accessTokenValiditySeconds = this.getFormTokenNumberValue($('#accessTokenValidityTime input[type=text]').val(), $('#accessTokenValidityTime select').val()); 
+        // }
 
 		if (accessTokenValiditySeconds < 1 || accessTokenValiditySeconds > getMaxAccessTokenLifeTime()) {
 			// Display an alert with an error message
@@ -931,9 +931,9 @@ var ClientFormView = Backbone.View.extend({
             	scopes.push("offline_access");            		
         	}
 
-        	if (!$('disableRefreshTokenTimeout').is(':checked')) {
-        		refreshTokenValiditySeconds = this.getFormTokenNumberValue($('#refreshTokenValidityTime input[type=text]').val(), $('#refreshTokenValidityTime select').val());
-        	}
+        	// if (!$('disableRefreshTokenTimeout').is(':checked')) {
+			refreshTokenValiditySeconds = this.getFormTokenNumberValue($('#refreshTokenValidityTime input[type=text]').val(), $('#refreshTokenValidityTime select').val());
+        	// }
 
 			if (refreshTokenValiditySeconds <= 0 || refreshTokenValiditySeconds > getMaxRefreshTokenLifeTime() || refreshTokenValiditySeconds == null) {
 				// Display an alert with an error message
