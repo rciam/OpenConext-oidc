@@ -526,14 +526,14 @@
                         <label for="disableAccessTokenTimeout" class="checkbox" data-i18n="client.client-form.access-token-no-timeout">Access tokens do not time out</label>
 					</div> -->
                     <div>
-                        <input type="text" class="" value="<%-(client.accessTokenValiditySeconds == null ? '' : client.accessTokenValiditySeconds)%>" id="access-token-timeout-time" size="16" style="width:8em;">
+                        <input type="text" class="" value="<%-(client.accessTokenValiditySeconds == null ? defaultAccessTokenValue : client.accessTokenValiditySeconds)%>" id="access-token-timeout-time" size="16" style="width:8em;">
 						<select id="access-token-timeout-unit" style="width:8em;">
 							<option data-i18n="client.client-form.seconds">seconds</option>
 							<option data-i18n="client.client-form.minutes">minutes</option>
 							<option data-i18n="client.client-form.hours">hours</option>
 						</select>
                     </div>
-                    <p class="help-block" data-i18n="client.client-form.token-timeout-help">Enter this time in seconds, minutes, or hours (Max value is <%- maxAccessTokenValue %> seconds).</p>
+                    <p class="help-block" data-i18n="client.client-form.access-token-timeout-help">Enter this time in seconds, minutes, or hours.</p>
                 </div>
             </div>
 
@@ -542,14 +542,14 @@
                 <label class="control-label" data-i18n="client.client-form.id-token-timeout">ID Token Timeout</label>
                 <div class="controls">
                     <div>
-                        <input type="text" class="" value="<%-(client.idTokenValiditySeconds == null ? '' : client.idTokenValiditySeconds)%>" id="id-token-timeout-time" size="16" style="width:8em;">
+                        <input type="text" class="" value="<%-(client.idTokenValiditySeconds == null ? defaultIdTokenValue : client.idTokenValiditySeconds)%>" id="id-token-timeout-time" size="16" style="width:8em;">
 						<select id="id-token-timeout-unit" style="width:8em;">
 							<option data-i18n="client.client-form.seconds">seconds</option>
 							<option data-i18n="client.client-form.minutes">minutes</option>
 							<option data-i18n="client.client-form.hours">hours</option>
 						</select>
                     </div>
-                    <p class="help-block" data-i18n="client.client-form.token-timeout-help">Enter this time in seconds, minutes, or hours (Max value is <%- maxIdTokenValue %> seconds(11.5 days)).</p>
+                    <p class="help-block" data-i18n="client.client-form.id-token-timeout-help">Enter this time in seconds, minutes, or hours.</p>
                 </div>
             </div>
 
@@ -579,14 +579,14 @@
                         <label for="disableRefreshTokenTimeout" class="checkbox" data-i18n="client.client-form.refresh-tokens-no-expire">Refresh tokens do not time out</label>
 					</div> -->
                     <div>
-                        <input type="text" class="" value="<%-(client.refreshTokenValiditySeconds == null ? '' : client.refreshTokenValiditySeconds)%>" id="refresh-token-timeout-time" size="16" style="width:8em;">
+                        <input type="text" class="" value="<%-(client.refreshTokenValiditySeconds == null ? defaultRefreshTokenValue : client.refreshTokenValiditySeconds)%>" id="refresh-token-timeout-time" size="16" style="width:8em;">
 						<select id="refresh-token-timeout-unit" style="width:8em;">
 							<option data-i18n="client.client-form.seconds">seconds</option>
 							<option data-i18n="client.client-form.minutes">minutes</option>
 							<option data-i18n="client.client-form.hours">hours</option>
 						</select>
 					</div>
-                    <p class="help-block" data-i18n="client.client-form.token-timeout-help">Enter this time in seconds, minutes, or hours (Max value is <%- maxRefreshTokenValue %> seconds.</p>
+                    <p class="help-block" data-i18n="client.client-form.refresh-token-timeout-help">Enter this time in seconds, minutes, or hours.</p>
                 </div>
             </div>
 	</div>

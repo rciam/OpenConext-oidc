@@ -78,8 +78,8 @@ var ClientModel = Backbone.Model.extend({
         requestUris:[],
         
         authorities:[],
-        accessTokenValiditySeconds: null,
-        refreshTokenValiditySeconds: null,
+        accessTokenValiditySeconds: getDefaultAccessTokenLifeTime(),
+        refreshTokenValiditySeconds: getDefaultRefreshTokenLifeTime(),
         resourceIds:[],
         //additionalInformation?
         
@@ -90,7 +90,7 @@ var ClientModel = Backbone.Model.extend({
         clearAccessTokensOnRefresh:true,
         dynamicallyRegistered:false,
         allowIntrospection:false,
-        idTokenValiditySeconds: null,
+        idTokenValiditySeconds: getDefaultIdTokenLifeTime(),
         createdAt:null,
 
         allowRefresh:false,
@@ -1241,7 +1241,7 @@ var ClientFormView = Backbone.View.extend({
         
         // set up token  fields
         if (!this.model.get("allowRefresh")) {
-            $("#refreshTokenValidityTime", this.$el).hide();
+			$("#refreshTokenValidityTime", this.$el).hide();
         }
 
         /* if (this.model.get("accessTokenValiditySeconds") == null) {

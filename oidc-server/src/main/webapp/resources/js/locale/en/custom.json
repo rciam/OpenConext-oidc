@@ -6,7 +6,10 @@
             "timeout-bound-error": "Invalid timeout value",
             "access-token-duration-error": "The duration of access token is out of range.",
             "refresh-token-duration-error": "The duration of refresh token is out of range.",
-            "id-token-duration-error": "The duration of id token is out of range."
+            "id-token-duration-error": "The duration of id token is out of range.",
+            "access-token-timeout-help": "Enter this time in seconds, minutes, or hours (Max value is 1000000 seconds (11.5 days)).",
+            "id-token-timeout-help": "Enter this time in seconds, minutes, or hours (Max value is 86400 seconds (24 hours)).",
+            "refresh-token-timeout-help": "Enter this time in seconds, minutes, or hours (Max value is 34128000 seconds (13 months))."
         }
     },
     "common": {
