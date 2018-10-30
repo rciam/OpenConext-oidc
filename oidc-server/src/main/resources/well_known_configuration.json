@@ -4,10 +4,11 @@
   "introspection_endpoint": "@configuration_end_point@introspect",
   "scopes_supported": [
     "openid",
-    "address",
-    "email",
     "profile",
-    "phone"
+    "email",
+    "eduperson_entitlement",
+    "eduperson_scoped_affiliation",
+    "eduperson_unique_id "
   ],
   "issuer": "@configuration_end_point@",
   "userinfo_encryption_enc_values_supported": [
@@ -62,31 +63,15 @@
     "preferred_username",
     "given_name",
     "family_name",
-    "middle_name",
-    "nickname",
-    "profile",
-    "picture",
-    "website",
-    "gender",
-    "zoneinfo",
-    "locale",
-    "updated_at",
-    "birthdate",
     "email",
-    "email_verified",
-    "phone_number",
-    "phone_number_verified",
-    "address",
-    "schac_home_organization",
-    "schac_home_organization_type",
-    "edu_person_scoped_affiliations",
-    "edumember_is_member_of",
-    "edu_person_affiliations",
+    "eduperson_assurance",
     "eduperson_entitlement",
-    "schac_personal_unique_codes",
-    "edu_person_principal_name",
-    "uids",
-    "edu_person_targeted_id"
+    "eduperson_scoped_affiliation",
+    "eduperson_unique_id",
+    "acr",
+    "edu_person_entitlement",
+    "edu_person_scoped_affiliations",
+    "edu_person_unique_id"
   ],
   "claim_types_supported": [
     "normal"
@@ -135,7 +120,7 @@
     "PS512"
   ],
   "op_tos_uri": "@configuration_end_point@about",
-  "require_request_uri_registration": true,
+  "require_request_uri_registration": false,
   "id_token_encryption_alg_values_supported": [
     "RSA-OAEP",
     "RSA-OAEP-256",
