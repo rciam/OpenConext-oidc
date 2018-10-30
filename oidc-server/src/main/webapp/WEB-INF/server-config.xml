@@ -62,22 +62,22 @@
 		</property>
 
     <!-- This property sets the maxinum lifetime of refresh tokens, in seconds. -->
-		<property name="maxRefreshTokenLifeTime" value="34128000" />
+		<property name="maxRefreshTokenLifeTime" value="${token.refresh.timeout.max}" />
 
 		<!-- This property sets the maxinum lifetime of access tokens, in seconds. -->
-		<property name="maxAccessTokenLifeTime" value="1000000" />
+		<property name="maxAccessTokenLifeTime" value="${token.access.timeout.max}" />
 
 		<!-- This property sets the maxinum lifetime of id tokens, in seconds. -->
-		<property name="maxIdTokenLifeTime" value="86400" />
+		<property name="maxIdTokenLifeTime" value="${token.id.timeout.max}" />
 
 		<!-- This property sets the default lifetime of refresh tokens, in seconds. -->
-		<property name="defaultRefreshTokenLifeTime" value="28800" />
+		<property name="defaultRefreshTokenLifeTime" value="${token.refresh.timeout.default}" />
 
 		<!-- This property sets the default lifetime of access tokens, in seconds. -->
-		<property name="defaultAccessTokenLifeTime" value="3600" />
+		<property name="defaultAccessTokenLifeTime" value="${token.access.timeout.default}" />
 
 		<!-- This property sets the default lifetime of id tokens, in seconds. -->
-    <property name="defaultIdTokenLifeTime" value="600" />
+    <property name="defaultIdTokenLifeTime" value="${token.id.timeout.default}" />
 
 		<!-- This property sets the display of eduperson_entitlement claim" -->
 		<property name="claimEduPersonEntitlement" value="${claim.eduperson.entitlement}" />
