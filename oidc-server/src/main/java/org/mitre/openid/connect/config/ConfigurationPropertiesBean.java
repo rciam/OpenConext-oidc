@@ -62,6 +62,24 @@ public class ConfigurationPropertiesBean {
 
 	private boolean heartMode = false;
 
+	private boolean claimEduPersonEntitlement = true;
+
+	private boolean claimEduPersonEntitlementOld = true;
+
+	private boolean claimEduPersonScopedAffiliation = true;
+
+	private boolean claimEduPersonScopedAffiliationOld = true;
+
+	private boolean claimEduPersonUniqueId = true;
+
+	private boolean claimEduPersonUniqueIdOld = true;
+
+	private List<String> adminEntitlements = Lists.newArrayList("");
+
+	private List<String> adminSubs = Lists.newArrayList("");
+
+	private boolean adminDevelopInstance = false;
+
 	public ConfigurationPropertiesBean() {
 
 	}
@@ -322,5 +340,130 @@ public class ConfigurationPropertiesBean {
 	 */
 	public void setHeartMode(boolean heartMode) {
 		this.heartMode = heartMode;
+	}
+
+	/**
+	 * @return the claimEduPersonEntitlement
+	 */
+	public boolean isClaimEduPersonEntitlement() {
+		return claimEduPersonEntitlement;
+	}
+
+	/**
+	 * @param claimEduPersonEntitlement the claimEduPersonEntitlement to set
+	 */
+	public void setClaimEduPersonEntitlement(boolean claimEduPersonEntitlement) {
+		this.claimEduPersonEntitlement = claimEduPersonEntitlement;
+	}
+
+	/**
+	 * @return the claimEduPersonEntitlementOld
+	 */
+	public boolean isClaimEduPersonEntitlementOld() {
+		return claimEduPersonEntitlementOld;
+	}
+
+	/**
+	 * @param claimEduPersonEntitlementOld the claimEduPersonEntitlementOld to set
+	 */
+	public void setClaimEduPersonEntitlementOld(boolean claimEduPersonEntitlementOld) {
+		this.claimEduPersonEntitlementOld = claimEduPersonEntitlementOld;
+	}
+
+	/**
+	 * @return the claimEduPersonScopedAffiliation
+	 */
+	public boolean isClaimEduPersonScopedAffiliation() {
+		return claimEduPersonScopedAffiliation;
+	}
+
+	/**
+	 * @param claimEduPersonScopedAffiliation the claimEduPersonScopedAffiliation to set
+	 */
+	public void setClaimEduPersonScopedAffiliation(boolean claimEduPersonScopedAffiliation) {
+		this.claimEduPersonScopedAffiliation = claimEduPersonScopedAffiliation;
+	}
+
+	/**
+	 * @return the claimEduPersonScopedAffiliationOld
+	 */
+	public boolean isClaimEduPersonScopedAffiliationOld() {
+		return claimEduPersonScopedAffiliationOld;
+	}
+
+	/**
+	 * @param claimEduPersonScopedAffiliationOld the claimEduPersonScopedAffiliationOld to set
+	 */
+	public void setClaimEduPersonScopedAffiliationOld(boolean claimEduPersonScopedAffiliationOld) {
+		this.claimEduPersonScopedAffiliationOld = claimEduPersonScopedAffiliationOld;
+	}
+
+	/**
+	 * @return the claimEduPersonUniqueId
+	 */
+	public boolean isClaimEduPersonUniqueId() {
+		return claimEduPersonUniqueId;
+	}
+
+	/**
+	 * @param claimEduPersonUniqueId the claimEduPersonUniqueId to set
+	 */
+	public void setClaimEduPersonUniqueId(boolean claimEduPersonUniqueId) {
+		this.claimEduPersonUniqueId = claimEduPersonUniqueId;
+	}
+
+	/**
+	 * @return the claimEduPersonUniqueIdOld
+	 */
+	public boolean isClaimEduPersonUniqueIdOld() {
+		return claimEduPersonUniqueIdOld;
+	}
+
+	/**
+	 * @param claimEduPersonUniqueIdOld the claimEduPersonUniqueIdOld to set
+	 */
+	public void setClaimEduPersonUniqueIdOld(boolean claimEduPersonUniqueIdOld) {
+		this.claimEduPersonUniqueIdOld = claimEduPersonUniqueIdOld;
+	}
+
+	/**
+	 * @return the adminEntitlements
+	 */
+	public List<String> getAdminEntitlements() {
+		return adminEntitlements;
+	}
+
+	/**
+	 * @param adminEntitlements the adminEntitlements to set
+	 */
+	public void setAdminEntitlements(List<String> adminEntitlements) {
+		this.adminEntitlements = adminEntitlements;
+	}
+
+	/**
+	 * @return the adminSubs
+	 */
+	public List<String> getAdminSubs() {
+		return adminSubs;
+	}
+
+	/**
+	 * @param adminSubs the adminSubs to set
+	 */
+	public void setAdminSubs(List<String> adminSubs) {
+		this.adminSubs = adminSubs;
+	}
+	/**
+	 * @return the adminDevelopInstance
+	 */
+	public boolean isAdminDevelopInstance() {
+		return adminDevelopInstance;
+	}
+
+	/**
+	 * @param adminDevelopInstance the adminDevelopInstance to set
+	 */
+	public void setAdminDevelopInstance(boolean adminDevelopInstance) {
+		this.adminDevelopInstance = adminDevelopInstance;
 	}
 }

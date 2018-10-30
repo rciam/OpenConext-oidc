@@ -32,6 +32,9 @@
 
 	<context:property-placeholder location="classpath:application.oidc.properties" />
 
+	<!-- Enable auto-wiring -->
+  <context:annotation-config/>
+
 	<bean id="configBean" class="org.mitre.openid.connect.config.ConfigurationPropertiesBean">
 	    
 	    <!-- This property is changed to match the deployed URL of the example overlay project. -->
@@ -75,6 +78,33 @@
 
 		<!-- This property sets the default lifetime of id tokens, in seconds. -->
     <property name="defaultIdTokenLifeTime" value="600" />
+
+		<!-- This property sets the display of eduperson_entitlement claim" -->
+		<property name="claimEduPersonEntitlement" value="${claim.eduperson.entitlement}" />
+
+		<!-- This property sets the display of edu_person_entitlements claim" -->
+		<property name="claimEduPersonEntitlementOld" value="${claim.eduperson.entitlement.old}" />
+
+		<!-- This property sets the display of eduperson_scoped_affiliation claim" -->
+		<property name="claimEduPersonScopedAffiliation" value="${claim.eduperson.scopedaffiliation}" />
+
+		<!-- This property sets the display of edu_person_scoped_affiliations claim" -->
+		<property name="claimEduPersonScopedAffiliationOld" value="${claim.eduperson.scopedaffiliation.old}" />
+
+		<!-- This property sets the display of eduperson_unique_id claim" -->
+		<property name="claimEduPersonUniqueId" value="${claim.eduperson.uniqueid}" />
+
+		<!-- This property sets the display of edu_person_unique_id claim" -->
+		<property name="claimEduPersonUniqueIdOld" value="${claim.eduperson.uniqueid.old}" />
+
+		<!-- This property sets the entitlements the user should contain to become an admin" -->
+		<property name="adminEntitlements" value="#{'${admin.entitlements}'.split(', ')}" />
+
+		<!-- This property sets the sub the user should contain to become an admin" -->
+		<property name="adminSubs" value="#{'${admin.subs}'.split(', ')}" />
+
+		<!-- This property sets the sub the user should contain to become an admin" -->
+		<property name="adminDevelopInstance" value="${admin.develop.instance}" />
 
 	</bean>
 	

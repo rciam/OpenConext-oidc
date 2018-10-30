@@ -1,11 +1,15 @@
 package oidc.service;
 
+import org.mitre.openid.connect.config.ConfigurationPropertiesBean;
 import org.mitre.openid.connect.service.ScopeClaimTranslationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.annotation.PostConstruct;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
@@ -14,49 +18,47 @@ import com.google.common.collect.SetMultimap;
 @Service("federationScopeClaimTranslationService")
 public class FederationScopeClaimTranslationService implements ScopeClaimTranslationService {
 
-  private SetMultimap<String, String> scopesToClaims = HashMultimap.create();
+	@Autowired
+	private ConfigurationPropertiesBean config;
+
+	private SetMultimap<String, String> scopesToClaims = HashMultimap.create();
 
 	/**
 	 * Default constructor; initializes scopesToClaims map
 	 */
 	public FederationScopeClaimTranslationService() {
 		scopesToClaims.put("openid", "sub");
+		scopesToClaims.put("openid", "acr");
+		scopesToClaims.put("openid", "eduperson_assurance");
 
 		scopesToClaims.put("profile", "name");
 		scopesToClaims.put("profile", "preferred_username");
 		scopesToClaims.put("profile", "given_name");
 		scopesToClaims.put("profile", "family_name");
-		scopesToClaims.put("profile", "middle_name");
-		scopesToClaims.put("profile", "nickname");
-		scopesToClaims.put("profile", "profile");
-		scopesToClaims.put("profile", "picture");
-		scopesToClaims.put("profile", "website");
-		scopesToClaims.put("profile", "gender");
-		scopesToClaims.put("profile", "zoneinfo");
-		scopesToClaims.put("profile", "locale");
-		scopesToClaims.put("profile", "updated_at");
-		scopesToClaims.put("profile", "birthdate");
 
 		scopesToClaims.put("email", "email");
-		scopesToClaims.put("email", "email_verified");
+	}
 
-		scopesToClaims.put("phone", "phone_number");
-		scopesToClaims.put("phone", "phone_number_verified");
-
-		scopesToClaims.put("address", "address");
-		
-		scopesToClaims.put("refeds_edu", "name");
-		scopesToClaims.put("refeds_edu", "given_name");
-		scopesToClaims.put("refeds_edu", "family_name");
-		scopesToClaims.put("refeds_edu", "email");
-		scopesToClaims.put("refeds_edu", "sub");
-		scopesToClaims.put("refeds_edu", "eduperson_unique_id");
-		scopesToClaims.put("refeds_edu", "acr");
-		scopesToClaims.put("refeds_edu", "eduperson_assurance");
-		scopesToClaims.put("refeds_edu", "edu_person_scoped_affiliations");
-		scopesToClaims.put("refeds_edu", "eduperson_scoped_affiliation");
-		scopesToClaims.put("refeds_edu", "edu_person_entitlements");
-		scopesToClaims.put("refeds_edu", "eduperson_entitlement");
+	@PostConstruct
+	public final void init() {
+		if (config.isClaimEduPersonEntitlementOld()) {
+			scopesToClaims.put("eduperson_entitlement", "edu_person_entitlements");
+		}
+		if (config.isClaimEduPersonEntitlement()) {
+			scopesToClaims.put("eduperson_entitlement", "eduperson_entitlement");
+		}
+		if (config.isClaimEduPersonScopedAffiliationOld()) {
+			scopesToClaims.put("eduperson_scoped_affiliation", "edu_person_scoped_affiliations");
+		}
+		if (config.isClaimEduPersonScopedAffiliation()) {
+			scopesToClaims.put("eduperson_scoped_affiliation", "eduperson_scoped_affiliation");
+		}
+		if (config.isClaimEduPersonUniqueIdOld()) {
+			scopesToClaims.put("eduperson_unique_id", "edu_person_unique_id");
+		}
+		if (config.isClaimEduPersonUniqueId()) {
+			scopesToClaims.put("eduperson_unique_id", "eduperson_unique_id");
+		}
 	}
 
 	/* (non-Javadoc)
