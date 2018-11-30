@@ -212,13 +212,14 @@ public class FederatedUserInfo extends DefaultUserInfo {
         ", eduPersonUniqueId='" + eduPersonUniqueId + '\'' +
         ", eduPersonPrincipalName='" + eduPersonPrincipalName + '\'' +
         ", eduPersonTargetedId='" + eduPersonTargetedId + '\'' +
-        ", eduPersonScopedAffiliations=" + eduPersonScopedAffiliations + '\'' +
-        ", eduPersonEntitlements=" + eduPersonEntitlements + '\'' +
-        ", newEduPersonEntitlement=" + eduPersonEntitlements + '\'' +
+        ", eduPersonEntitlement=" + eduPersonEntitlements + '\'' +
         ", eduPersonScopedAffiliation=" + eduPersonScopedAffiliations + '\'' +
-        ", eduPersonUniqueId='" + eduPersonUniqueId + '\'' +
         ", eduPersonAssurance='" + eduPersonAssurance + '\'' +
         ", preferredUsername='" + preferredUsername + '\'' +
+        ", name='" + getName() + '\'' +
+        ", givenName='" + getGivenName() + '\'' +
+        ", familyName='" + getFamilyName() + '\'' +
+        ", email='" + getEmail() + '\'' +
         '}';
   }
 
