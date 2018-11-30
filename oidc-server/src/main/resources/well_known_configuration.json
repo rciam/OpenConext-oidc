@@ -6,6 +6,7 @@
     "openid",
     "profile",
     "email",
+    "offline_access",
     "eduperson_entitlement",
     "eduperson_scoped_affiliation",
     "eduperson_unique_id "
@@ -89,7 +90,7 @@
     "code",
     "token"
   ],
-  "request_uri_parameter_supported": false,
+  "request_uri_parameter_supported": true,
   "userinfo_encryption_alg_values_supported": [
     "RSA-OAEP",
     "RSA-OAEP-256",
