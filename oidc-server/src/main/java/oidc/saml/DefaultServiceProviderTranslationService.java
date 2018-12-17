@@ -1,10 +1,14 @@
 package oidc.saml;
 
+import org.mitre.openid.connect.config.ConfigurationPropertiesBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 @Service("defaultServiceProviderTranslationService")
 public class DefaultServiceProviderTranslationService implements ServiceProviderTranslationService{
+  @Autowired
+  private ConfigurationPropertiesBean config;
 
   @Override
   public String translateServiceProviderEntityId(String entityId) {
@@ -14,8 +18,9 @@ public class DefaultServiceProviderTranslationService implements ServiceProvider
 
   @Override
   public String translateClientId(String clientId) {
+    String baseUrl = config.getIssuer();
     Assert.notNull(clientId);
-    return clientId.replaceAll("(?<!@)@(?!@)", ":").replaceAll("@@","@");
+    return baseUrl + clientId.replaceAll("(?<!@)@(?!@)", ":").replaceAll("@@","@");
   }
 
 }
