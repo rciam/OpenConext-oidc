@@ -32,6 +32,9 @@
 
 	<context:property-placeholder location="classpath:application.oidc.properties" />
 
+	<!-- Enable auto-wiring -->
+  <context:annotation-config/>
+
 	<bean id="configBean" class="org.mitre.openid.connect.config.ConfigurationPropertiesBean">
 	    
 	    <!-- This property is changed to match the deployed URL of the example overlay project. -->
@@ -49,6 +52,59 @@
 
 		<!-- This property forces the issuer value to start with "https" -->
 		<!-- <property name="forceHttps" value="true" /> -->
+
+		<!-- This property sets the set of namespaces for language translation files. The default is "messages". These are checked in the order presented here. -->
+		<property name="languageNamespaces">
+			<list>
+				<value>custom</value>
+				<value>messages</value>
+			</list>
+		</property>
+
+    <!-- This property sets the maxinum lifetime of refresh tokens, in seconds. -->
+		<property name="maxRefreshTokenLifeTime" value="${token.refresh.timeout.max}" />
+
+		<!-- This property sets the maxinum lifetime of access tokens, in seconds. -->
+		<property name="maxAccessTokenLifeTime" value="${token.access.timeout.max}" />
+
+		<!-- This property sets the maxinum lifetime of id tokens, in seconds. -->
+		<property name="maxIdTokenLifeTime" value="${token.id.timeout.max}" />
+
+		<!-- This property sets the default lifetime of refresh tokens, in seconds. -->
+		<property name="defaultRefreshTokenLifeTime" value="${token.refresh.timeout.default}" />
+
+		<!-- This property sets the default lifetime of access tokens, in seconds. -->
+		<property name="defaultAccessTokenLifeTime" value="${token.access.timeout.default}" />
+
+		<!-- This property sets the default lifetime of id tokens, in seconds. -->
+    <property name="defaultIdTokenLifeTime" value="${token.id.timeout.default}" />
+
+		<!-- This property sets the display of eduperson_entitlement claim" -->
+		<property name="claimEduPersonEntitlement" value="${claim.eduperson.entitlement}" />
+
+		<!-- This property sets the display of edu_person_entitlements claim" -->
+		<property name="claimEduPersonEntitlementOld" value="${claim.eduperson.entitlement.old}" />
+
+		<!-- This property sets the display of eduperson_scoped_affiliation claim" -->
+		<property name="claimEduPersonScopedAffiliation" value="${claim.eduperson.scopedaffiliation}" />
+
+		<!-- This property sets the display of edu_person_scoped_affiliations claim" -->
+		<property name="claimEduPersonScopedAffiliationOld" value="${claim.eduperson.scopedaffiliation.old}" />
+
+		<!-- This property sets the display of eduperson_unique_id claim" -->
+		<property name="claimEduPersonUniqueId" value="${claim.eduperson.uniqueid}" />
+
+		<!-- This property sets the display of edu_person_unique_id claim" -->
+		<property name="claimEduPersonUniqueIdOld" value="${claim.eduperson.uniqueid.old}" />
+
+		<!-- This property sets the entitlements the user should contain to become an admin" -->
+		<property name="adminEntitlements" value="#{'${admin.entitlements}'.split(', ')}" />
+
+		<!-- This property sets the sub the user should contain to become an admin" -->
+		<property name="adminSubs" value="#{'${admin.subs}'.split(', ')}" />
+
+		<!-- This property sets the sub the user should contain to become an admin" -->
+		<property name="adminDevelopInstance" value="${admin.develop.instance}" />
 
 	</bean>
 	

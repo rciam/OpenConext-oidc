@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 public class SAMLUser extends User {
 
+    private static final long serialVersionUID = 5582621468007779146L;
     private final String clientId;
 
     public SAMLUser(String sub, boolean isAdmin, String clientId) {

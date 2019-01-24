@@ -6,6 +6,8 @@ import org.mitre.oauth2.service.impl.DefaultIntrospectionResultAssembler;
 import org.mitre.openid.connect.model.UserInfo;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.mitre.openid.connect.config.ConfigurationPropertiesBean;
 
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +15,9 @@ import java.util.Set;
 @Service
 @Primary
 public class ExtendedIntrospectionResultAssembler extends DefaultIntrospectionResultAssembler {
+    
+    @Autowired
+    private ConfigurationPropertiesBean config;
 
     @Override
     public Map<String, Object> assembleFrom(OAuth2AccessTokenEntity accessToken, UserInfo userInfo, Set<String>
@@ -20,16 +25,22 @@ public class ExtendedIntrospectionResultAssembler extends DefaultIntrospectionRe
         Map<String, Object> result = super.assembleFrom(accessToken, userInfo, authScopes);
         if (userInfo != null && userInfo instanceof FederatedUserInfo) {
             FederatedUserInfo federatedUserInfo = (FederatedUserInfo) userInfo;
-            result.put("schac_home", federatedUserInfo.getSchacHomeOrganization());
-            result.put("unspecified_id", federatedUserInfo.getUnspecifiedNameId());
+            result.put("iss", config.getIssuer());
             result.put("authenticating_authority", federatedUserInfo.getAuthenticatingAuthority());
-            result.put("edu_person_principal_name", federatedUserInfo.getEduPersonPrincipalName());
-            result.put("eduperson_entitlement", federatedUserInfo.getEduPersonEntitlements());
-            result.put("edumember_is_member_of", federatedUserInfo.getIsMemberOfs());
-            result.put("email", federatedUserInfo.getEmail());
-            result.put("display_name", federatedUserInfo.getPreferredUsername());
-            result.put("given_name", federatedUserInfo.getName());
-            result.put("sur_name", federatedUserInfo.getFamilyName());
+            result.put("acr", federatedUserInfo.getAcr());
+            result.put("eduperson_assurance", federatedUserInfo.getEduPersonAssurance());
+            if (config.isClaimEduPersonEntitlementOld()) {
+                result.put("edu_person_entitlements", federatedUserInfo.getEduPersonEntitlements());
+            }
+            if (config.isClaimEduPersonEntitlement()) {
+                result.put("eduperson_entitlement", federatedUserInfo.getEduPersonEntitlements());
+            }
+            if (config.isClaimEduPersonScopedAffiliationOld()) {
+                result.put("edu_person_scoped_affiliations", federatedUserInfo.getEduPersonScopedAffiliations());
+            }
+            if (config.isClaimEduPersonScopedAffiliation()) {
+                result.put("eduperson_scoped_affiliation", federatedUserInfo.getEduPersonScopedAffiliations());
+            }
         }
         return result;
     }

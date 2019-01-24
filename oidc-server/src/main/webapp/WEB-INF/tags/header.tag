@@ -26,7 +26,6 @@
 
     <!-- SURFconext override stylesheet -->
     <link href="resources/css/oidc-base.css" rel="stylesheet">
-    <link href="resources/css/oidc-header.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -34,18 +33,22 @@
     <![endif]-->
 
     <!-- favico -->
-    <link rel="shortcut icon" href="resources/images/mitreid-connect.ico">
+    <link rel="shortcut icon" href="resources/images/favico.ico">
 
     <!-- Load jQuery up here so that we can use in-page functions -->
     <script type="text/javascript" src="resources/js/lib/jquery.js"></script>
     <script type="text/javascript" charset="UTF-8" src="resources/js/lib/moment-with-locales.js"></script>
     <script type="text/javascript" src="resources/js/lib/i18next.js"></script>
-    <script type="text/javascript" src="resources/js/language-selector.js"></script>
     <script type="text/javascript">
         $.i18n.init({
             fallbackLng: "en",
             lng: "${pageContext.response.locale == null ? "en" : pageContext.response.locale}",
-            resGetPath: "resources/js/locale/__lng__/messages.json"
+            resGetPath: "resources/js/locale/__lng__/__ns__.json",
+            ns: {
+            	namespaces: ${config.languageNamespacesString},
+            	defaultNs: '${config.defaultLanguageNamespace}'
+            },
+            fallbackNS: ${config.languageNamespacesString}
         });
         moment.locale("${config.locale}");
     	// safely set the title of the application
@@ -73,6 +76,37 @@
 				return false;
 			}
 		}
+
+        // get max access token timeout value
+        function getMaxAccessTokenLifeTime() {
+            return ${ config.maxAccessTokenLifeTime };
+        }
+
+        // get max refresh token timeout value
+        function getMaxRefreshTokenLifeTime() {
+            return ${ config.maxRefreshTokenLifeTime };
+        }
+
+        // get max id token timeout value
+        function getMaxIdTokenLifeTime() {
+            return ${ config.maxIdTokenLifeTime };
+        }
+
+        // get default access token timeout value
+        function getDefaultAccessTokenLifeTime() {
+            return ${ config.defaultAccessTokenLifeTime };
+        }
+
+        // get default refresh token timeout value
+        function getDefaultRefreshTokenLifeTime() {
+            return ${ config.defaultRefreshTokenLifeTime };
+        }
+
+        // get default id token timeout value
+        function getDefaultIdTokenLifeTime() {
+            return ${ config.defaultIdTokenLifeTime };
+        }
+		
     </script>    
 </head>
 

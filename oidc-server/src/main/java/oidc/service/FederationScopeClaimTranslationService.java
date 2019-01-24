@@ -1,72 +1,88 @@
 package oidc.service;
 
+import org.mitre.openid.connect.config.ConfigurationPropertiesBean;
 import org.mitre.openid.connect.service.ScopeClaimTranslationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.SetMultimap;
+
 @Primary
 @Service("federationScopeClaimTranslationService")
 public class FederationScopeClaimTranslationService implements ScopeClaimTranslationService {
 
-    private final Set<String> claims = new HashSet<>();
-    private final Set<String> noClaims = new HashSet<>();
+	@Autowired
+	private ConfigurationPropertiesBean config;
 
-    public FederationScopeClaimTranslationService() {
-        claims.add("sub");
+	private SetMultimap<String, String> scopesToClaims = HashMultimap.create();
 
-        claims.add("name");
-        claims.add("preferred_username");
-        claims.add("given_name");
-        claims.add("family_name");
-        claims.add("middle_name");
-        claims.add("nickname");
-        claims.add("profile");
-        claims.add("picture");
-        claims.add("website");
-        claims.add("gender");
-        claims.add("zoneinfo");
-        claims.add("locale");
-        claims.add("updated_at");
-        claims.add("birthdate");
+	/**
+	 * Default constructor; initializes scopesToClaims map
+	 */
+	public FederationScopeClaimTranslationService() {
+		scopesToClaims.put("openid", "sub");
+		scopesToClaims.put("openid", "acr");
+		scopesToClaims.put("openid", "eduperson_assurance");
 
-        claims.add("email");
-        claims.add("email_verified");
+		scopesToClaims.put("profile", "name");
+		scopesToClaims.put("profile", "preferred_username");
+		scopesToClaims.put("profile", "given_name");
+		scopesToClaims.put("profile", "family_name");
 
-        claims.add("phone_number");
-        claims.add("phone_number_verified");
+		scopesToClaims.put("email", "email");
+	}
 
-        claims.add("address");
+	@PostConstruct
+	public final void init() {
+		if (config.isClaimEduPersonEntitlementOld()) {
+			scopesToClaims.put("eduperson_entitlement", "edu_person_entitlements");
+		}
+		if (config.isClaimEduPersonEntitlement()) {
+			scopesToClaims.put("eduperson_entitlement", "eduperson_entitlement");
+		}
+		if (config.isClaimEduPersonScopedAffiliationOld()) {
+			scopesToClaims.put("eduperson_scoped_affiliation", "edu_person_scoped_affiliations");
+		}
+		if (config.isClaimEduPersonScopedAffiliation()) {
+			scopesToClaims.put("eduperson_scoped_affiliation", "eduperson_scoped_affiliation");
+		}
+		if (config.isClaimEduPersonUniqueIdOld()) {
+			scopesToClaims.put("eduperson_unique_id", "edu_person_unique_id");
+		}
+		if (config.isClaimEduPersonUniqueId()) {
+			scopesToClaims.put("eduperson_unique_id", "eduperson_unique_id");
+		}
+	}
 
-        claims.add("schac_home_organization");
-        claims.add("schac_home_organization_type");
-        claims.add("edu_person_scoped_affiliations");
-        claims.add("edumember_is_member_of");
+	/* (non-Javadoc)
+	 * @see org.mitre.openid.connect.service.ScopeClaimTranslationService#getClaimsForScope(java.lang.String)
+	 */
+	@Override
+	public Set<String> getClaimsForScope(String scope) {
+		if (scopesToClaims.containsKey(scope)) {
+			return scopesToClaims.get(scope);
+		} else {
+			return new HashSet<>();
+		}
+	}
 
-        claims.add("edu_person_affiliations");
-        claims.add("eduperson_entitlement");
-
-        claims.add("schac_personal_unique_codes");
-        claims.add("edu_person_principal_name");
-        claims.add("uids");
-        claims.add("edu_person_targeted_id");
-
-    }
-
-    @Override
-    public Set<String> getClaimsForScope(String scope) {
-        return "openid".equals(scope) ? claims : noClaims;
-    }
-
-    @Override
-    public Set<String> getClaimsForScopeSet(Set<String> scopes) {
-        return scopes.contains("openid") ? claims : noClaims;
-    }
-
-    protected Set<String> allClaims() {
-        return claims;
+	/* (non-Javadoc)
+	 * @see org.mitre.openid.connect.service.ScopeClaimTranslationService#getClaimsForScopeSet(java.util.Set)
+	 */
+	@Override
+	public Set<String> getClaimsForScopeSet(Set<String> scopes) {
+		Set<String> result = new HashSet<>();
+		for (String scope : scopes) {
+			result.addAll(getClaimsForScope(scope));
+		}
+		return result;
     }
 
 }

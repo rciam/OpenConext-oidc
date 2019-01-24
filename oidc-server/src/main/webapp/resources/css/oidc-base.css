@@ -9,7 +9,7 @@ body {
 }
 
 .container-fluid {
-    background-color: #EFEFEE;
+    background-color: #FFFFFF;
 }
 
 .main {
@@ -21,11 +21,11 @@ h1, label {
 }
 
 #push {
-    background-color: #EFEFEE;
+    background-color: #FFFFFF;
 }
 
 #wrap {
-    background-color: #EFEFEE;
+    background-color: #FFFFFF;
 }
 
 .navbar-fixed-top {
@@ -40,18 +40,12 @@ h1, label {
 }
 
 .row-fluid {
-    background: #fff;
     border-radius: 5px;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, .2);
-    padding: 0px 20px;
-    max-width: 1000px;
-    margin: 0 auto 20px;
+    margin: 0 auto 0px;
 }
 
 .btn-primary {
     background: #4DB3CF none;
-    text-shadow: none;
-    border: none;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] {
     background: #4B9EBA none;
@@ -64,17 +58,16 @@ h1, label {
     margin-left: 240px;
 }
 .breadcrumb {
-    margin: 20px 20px 20px 0px;
+    margin: 0px 0px 20px 0px;
     list-style: none;
-    background-color: #FBFBFB;
     border-radius: 5px;
 }
 .hero-unit {
-    padding: 30px;
+    padding: 30px 30px 30px 30px;
     margin-bottom: 15px;
     font-size: 18px;
     border-radius: 6px;
-    background-color: #fff;
+    background-color: #F5F5F5;
 }
 .hero-unit h1 {
     font-size: 28px;

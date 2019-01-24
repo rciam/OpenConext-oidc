@@ -8,16 +8,17 @@
     <name>oidc</name>
 
     <properties>
-        <java-version>1.7</java-version>
+        <java-version>1.8</java-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <flyway.version>3.2.1</flyway.version>
+        <postgresql-jdbc-driver.version>42.0.0</postgresql-jdbc-driver.version>
         <spring-security-saml2-core.version>1.0.2.OPENCONEXT</spring-security-saml2-core.version>
         <org.springframework-version>3.2.3.RELEASE</org.springframework-version>
         <org.slf4j-version>1.5.10</org.slf4j-version>
         <spring.security.version>3.1.0.RELEASE</spring.security.version>
         <spring.oauth2.security.version>2.3.1.OIDC-BUILD-OPEN-CONEXT</spring.oauth2.security.version>
-        <mitreid-version>1.2.5</mitreid-version>
+        <mitreid-version>1.2.6</mitreid-version>
         <app.timestamp>${maven.build.timestamp}</app.timestamp>
     </properties>
 
